@@ -14,10 +14,13 @@ export const sessions = pgTable(
   (table) => [index("IDX_session_expire").on(table.expire)],
 );
 
-// Users table - using OIDC auth (Replit Auth)
+// Users table - supports local email/password, Google OAuth, and GitHub OAuth
 export const users = pgTable("users", {
-  id: varchar("id").primaryKey(),
-  email: varchar("email").unique(),
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: varchar("email").unique().notNull(),
+  password: varchar("password"), // Nullable for OAuth users
+  authProvider: varchar("auth_provider").notNull().default('local'), // 'local', 'google', 'github'
+  providerId: varchar("provider_id"), // OAuth provider's user ID
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),

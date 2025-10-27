@@ -1,7 +1,9 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, isAuthenticated } from "./auth";
+import passport from "passport";
+import bcrypt from "bcryptjs";
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -15,32 +17,135 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
   await setupAuth(app);
 
-  // Auth routes - public endpoint that returns user or null
+  // ========== AUTH ROUTES ==========
+  
+  // Get current user (public endpoint - returns null if not authenticated)
   app.get('/api/auth/user', async (req: any, res) => {
     try {
-      // Return null if not authenticated instead of 401
-      if (!req.isAuthenticated() || !req.user?.claims?.sub) {
+      if (!req.isAuthenticated() || !req.user?.id) {
         return res.json(null);
       }
 
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
+      const user = await storage.getUser(req.user.id);
       if (!user) {
         return res.json(null);
       }
       
-      res.json(user);
+      // Don't send password to frontend
+      const { password, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
     } catch (error) {
       console.error("Error fetching user:", error);
       res.json(null);
     }
   });
 
-  // Stripe subscription routes
+  // Register with email/password
+  app.post('/api/register', async (req, res) => {
+    try {
+      const { email, password, firstName, lastName } = req.body;
+
+      if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password are required' });
+      }
+
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ error: 'User with this email already exists' });
+      }
+
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Create user
+      const user = await storage.createUser({
+        email,
+        password: hashedPassword,
+        authProvider: 'local',
+        firstName: firstName || null,
+        lastName: lastName || null,
+        profileImageUrl: null,
+      });
+
+      // Create free subscription
+      await storage.createSubscription({
+        userId: user.id,
+        plan: 'free',
+        status: 'active',
+      });
+
+      // Log the user in
+      req.login(user, (err) => {
+        if (err) {
+          return res.status(500).json({ error: 'Registration successful but login failed' });
+        }
+        const { password: _, ...userWithoutPassword } = user;
+        res.json(userWithoutPassword);
+      });
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      res.status(500).json({ error: 'Registration failed' });
+    }
+  });
+
+  // Login with email/password
+  app.post('/api/login', (req, res, next) => {
+    passport.authenticate('local', (err: any, user: any, info: any) => {
+      if (err) {
+        return res.status(500).json({ error: 'Authentication error' });
+      }
+      if (!user) {
+        return res.status(401).json({ error: info?.message || 'Invalid credentials' });
+      }
+      req.login(user, (loginErr) => {
+        if (loginErr) {
+          return res.status(500).json({ error: 'Login failed' });
+        }
+        const { password, ...userWithoutPassword } = user;
+        res.json(userWithoutPassword);
+      });
+    })(req, res, next);
+  });
+
+  // Google OAuth
+  app.get('/api/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  }));
+
+  app.get('/api/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    (req, res) => {
+      res.redirect('/dashboard');
+    }
+  );
+
+  // GitHub OAuth
+  app.get('/api/auth/github', passport.authenticate('github', {
+    scope: ['user:email'],
+  }));
+
+  app.get('/api/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/login' }),
+    (req, res) => {
+      res.redirect('/dashboard');
+    }
+  );
+
+  // Logout
+  app.post('/api/logout', (req, res) => {
+    req.logout((err) => {
+      if (err) {
+        return res.status(500).json({ error: 'Logout failed' });
+      }
+      res.json({ success: true });
+    });
+  });
+
+  // ========== STRIPE SUBSCRIPTION ROUTES ==========
   app.post('/api/create-checkout-session', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const { plan } = req.body;
 
       if (!['pro', 'enterprise'].includes(plan)) {
@@ -219,7 +324,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get user's subscription
   app.get('/api/subscription', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const subscription = await storage.getSubscription(userId);
       
       if (!subscription) {
@@ -237,7 +342,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // API Key management routes
   app.get('/api/keys', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const keys = await storage.getApiKeys(userId);
       res.json(keys);
     } catch (error: any) {
@@ -248,7 +353,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post('/api/keys', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const { name } = req.body;
 
       if (!name || name.trim().length === 0) {
@@ -269,7 +374,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.delete('/api/keys/:id', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const { id } = req.params;
 
       // Verify the key belongs to the user
@@ -291,7 +396,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Usage tracking and stats routes
   app.get('/api/usage/logs', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const limit = parseInt(req.query.limit as string) || 100;
       const logs = await storage.getUserUsageLogs(userId, limit);
       res.json(logs);
@@ -303,7 +408,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get('/api/usage/stats', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const days = parseInt(req.query.days as string) || 30;
       const stats = await storage.getUserUsageStats(userId, days);
       res.json(stats);
