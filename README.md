@@ -127,6 +127,106 @@ npm run dev
 
 The application will be available at `http://localhost:5000`
 
+## 🐳 Docker Deployment
+
+### Quick Start with Docker
+
+**1. Build the Docker image:**
+```bash
+docker build -t hosterget-cloud-api .
+```
+
+**2. Run the container:**
+```bash
+docker run -d \
+  --name hosterget \
+  -p 5000:5000 \
+  -e DATABASE_URL=postgresql://user:pass@host:5432/db \
+  -e SESSION_SECRET=your-secret-key-min-32-chars \
+  -e STRIPE_SECRET_KEY=sk_live_your_key \
+  -e VITE_STRIPE_PUBLIC_KEY=pk_live_your_key \
+  -e STRIPE_WEBHOOK_SECRET=whsec_your_secret \
+  -e NODE_ENV=production \
+  hosterget-cloud-api
+```
+
+**3. View logs:**
+```bash
+docker logs -f hosterget
+```
+
+**4. Stop the container:**
+```bash
+docker stop hosterget
+docker rm hosterget
+```
+
+### Using Environment File
+
+Create a `docker.env` file with your environment variables:
+```bash
+DATABASE_URL=postgresql://user:pass@host:5432/db
+SESSION_SECRET=your-secret-key
+STRIPE_SECRET_KEY=sk_live_your_key
+VITE_STRIPE_PUBLIC_KEY=pk_live_your_key
+STRIPE_WEBHOOK_SECRET=whsec_your_secret
+NODE_ENV=production
+PORT=5000
+```
+
+Then run:
+```bash
+docker run -d \
+  --name hosterget \
+  -p 5000:5000 \
+  --env-file docker.env \
+  hosterget-cloud-api
+```
+
+### Docker with External PostgreSQL
+
+If you have PostgreSQL running externally:
+```bash
+docker run -d \
+  --name hosterget \
+  -p 5000:5000 \
+  -e DATABASE_URL=postgresql://user:pass@postgres-host:5432/hosterget \
+  -e SESSION_SECRET=$(openssl rand -base64 32) \
+  -e STRIPE_SECRET_KEY=sk_live_xxx \
+  -e VITE_STRIPE_PUBLIC_KEY=pk_live_xxx \
+  -e STRIPE_WEBHOOK_SECRET=whsec_xxx \
+  -e NODE_ENV=production \
+  hosterget-cloud-api
+```
+
+### Health Check
+
+The Docker container includes a health check that runs every 30 seconds:
+```bash
+docker inspect --format='{{json .State.Health}}' hosterget
+```
+
+### Volume Mounting (Optional)
+
+To persist attached assets (videos, images):
+```bash
+docker run -d \
+  --name hosterget \
+  -p 5000:5000 \
+  -v $(pwd)/attached_assets:/app/attached_assets \
+  --env-file docker.env \
+  hosterget-cloud-api
+```
+
+### Multi-Stage Build Benefits
+
+The Dockerfile uses multi-stage builds to:
+- ✅ Minimize image size (only production dependencies)
+- ✅ Separate build and runtime environments
+- ✅ Run as non-root user for security
+- ✅ Include health checks for container orchestration
+- ✅ Build both frontend and backend in one step
+
 ## 🏗️ Project Structure
 
 ```

@@ -1,0 +1,59 @@
+# Dependencies (will be installed in Docker)
+node_modules
+npm-debug.log*
+
+# Build output (will be built in Docker)
+dist
+
+# Environment files (sensitive data)
+.env
+.env.*
+!.env.example
+
+# Git files
+.git
+.gitignore
+.github
+
+# Documentation
+README.md
+design_guidelines.md
+replit.md
+
+# Development files
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+.cache
+.tmp
+*.tmp
+*.log
+logs
+
+# Test files
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Replit specific
+.replit
+.upm
+.local
+
+# Archives
+*.tar.gz
+*.zip
+
+# Server public (generated during build)
+server/public
+
+# Attached assets (large media files - mount these as volume if needed)
+attached_assets
