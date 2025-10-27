@@ -5,6 +5,14 @@ FROM node:20-alpine AS builder
 # Set working directory
 WORKDIR /app
 
+# Accept build arguments (these are passed from docker build command)
+ARG VITE_STRIPE_PUBLIC_KEY
+ARG NODE_ENV=production
+
+# Set environment variables for build process
+ENV VITE_STRIPE_PUBLIC_KEY=$VITE_STRIPE_PUBLIC_KEY
+ENV NODE_ENV=$NODE_ENV
+
 # Copy package files
 COPY package*.json ./
 
@@ -24,8 +32,23 @@ FROM node:20-alpine AS production
 # Set working directory
 WORKDIR /app
 
-# Set NODE_ENV to production
-ENV NODE_ENV=production
+# Accept runtime environment arguments
+ARG DATABASE_URL
+ARG SESSION_SECRET
+ARG STRIPE_SECRET_KEY
+ARG STRIPE_WEBHOOK_SECRET
+ARG VITE_STRIPE_PUBLIC_KEY
+ARG PORT=5000
+ARG NODE_ENV=production
+
+# Set runtime environment variables
+ENV DATABASE_URL=$DATABASE_URL
+ENV SESSION_SECRET=$SESSION_SECRET
+ENV STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY
+ENV STRIPE_WEBHOOK_SECRET=$STRIPE_WEBHOOK_SECRET
+ENV VITE_STRIPE_PUBLIC_KEY=$VITE_STRIPE_PUBLIC_KEY
+ENV PORT=$PORT
+ENV NODE_ENV=$NODE_ENV
 
 # Install production dependencies only
 COPY package*.json ./

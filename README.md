@@ -136,10 +136,15 @@ The application will be available at `http://localhost:5000`
 
 ### Quick Start with Docker
 
-**1. Build the Docker image:**
+**1. Build the Docker image with required build arguments:**
 ```bash
-docker build -t hosterget-cloud-api .
+docker build \
+  --build-arg VITE_STRIPE_PUBLIC_KEY=pk_live_your_key \
+  --build-arg NODE_ENV=production \
+  -t hosterget-cloud-api .
 ```
+
+**Important:** The `VITE_STRIPE_PUBLIC_KEY` must be provided during build time because Vite bundles it into the frontend code.
 
 **2. Run the container:**
 ```bash
