@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { Cpu, Scan, Shield, Zap, Lock, Globe, Brain, TrendingUp, Check, Users, ArrowRight } from "lucide-react";
+import heroVideo from "@assets/1027_1761553215847.mp4";
 
 export default function Home() {
   const testimonials = [
@@ -75,7 +76,7 @@ export default function Home() {
                 playsInline
                 className="w-full h-full object-cover"
               >
-                <source src="https://www.digitalocean.com/videos/GradientAI_1920x1080.mp4" type="video/mp4" />
+                <source src={heroVideo} type="video/mp4" />
               </video>
             </div>
           </div>
