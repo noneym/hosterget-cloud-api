@@ -54,11 +54,10 @@ ENV PORT=5000
 # - STRIPE_WEBHOOK_SECRET
 # - VITE_STRIPE_PUBLIC_KEY (for frontend)
 
-# Install production dependencies + vite (needed by server/vite.ts imports)
+# Install all dependencies (including dev) to ensure vite/nanoid are available
+# The esbuild bundle marks these as external, so they're needed at runtime
 COPY package*.json ./
-RUN npm ci --only=production && \
-    npm install vite nanoid && \
-    npm cache clean --force
+RUN npm ci && npm cache clean --force
 
 # Copy built artifacts from builder stage
 COPY --from=builder /app/dist ./dist

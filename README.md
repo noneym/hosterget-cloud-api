@@ -233,14 +233,13 @@ docker run -d \
 ### Multi-Stage Build Benefits
 
 The Dockerfile uses multi-stage builds to:
-- ✅ Minimize image size (production dependencies + minimal dev packages)
 - ✅ Separate build and runtime environments
 - ✅ Run as non-root user for security
 - ✅ Include health checks for container orchestration
 - ✅ Build both frontend and backend in one step
 - ✅ External package optimization (vite, nanoid marked as external in bundle)
 
-**Note:** The production image includes `vite` and `nanoid` packages even though they're dev dependencies. This is required because `server/vite.ts` imports them, and they're marked as external in the esbuild bundle to reduce bundle size.
+**Note:** The production image includes all dependencies (including devDependencies) because `server/vite.ts` dynamically imports Vite at runtime. The esbuild bundle marks these packages as external to avoid bundling them, which keeps the bundle size small while requiring the packages to be available in node_modules at runtime.
 
 ## 🏗️ Project Structure
 
