@@ -27,8 +27,10 @@ export interface IStorage {
 
   // Subscription methods
   getSubscription(userId: string): Promise<Subscription | undefined>;
+  getSubscriptionByStripeId(stripeSubscriptionId: string): Promise<Subscription | undefined>;
   createSubscription(subscription: InsertSubscription): Promise<Subscription>;
   updateSubscription(id: string, subscription: Partial<InsertSubscription>): Promise<Subscription | undefined>;
+  updateSubscriptionByStripeId(stripeSubscriptionId: string, subscription: Partial<InsertSubscription>): Promise<Subscription | undefined>;
 
   // API Key methods
   getApiKeys(userId: string): Promise<ApiKey[]>;
@@ -89,6 +91,13 @@ export class DbStorage implements IStorage {
     return result[0];
   }
 
+  async getSubscriptionByStripeId(stripeSubscriptionId: string): Promise<Subscription | undefined> {
+    const result = await db.select().from(subscriptions)
+      .where(eq(subscriptions.stripeSubscriptionId, stripeSubscriptionId))
+      .limit(1);
+    return result[0];
+  }
+
   async createSubscription(subscription: InsertSubscription): Promise<Subscription> {
     const result = await db.insert(subscriptions).values(subscription).returning();
     return result[0];
@@ -98,6 +107,14 @@ export class DbStorage implements IStorage {
     const result = await db.update(subscriptions)
       .set({ ...subscription, updatedAt: new Date() })
       .where(eq(subscriptions.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async updateSubscriptionByStripeId(stripeSubscriptionId: string, subscription: Partial<InsertSubscription>): Promise<Subscription | undefined> {
+    const result = await db.update(subscriptions)
+      .set({ ...subscription, updatedAt: new Date() })
+      .where(eq(subscriptions.stripeSubscriptionId, stripeSubscriptionId))
       .returning();
     return result[0];
   }

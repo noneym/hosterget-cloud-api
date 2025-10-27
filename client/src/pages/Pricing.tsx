@@ -3,13 +3,68 @@ import { Footer } from "@/components/Footer";
 import { PricingCard } from "@/components/PricingCard";
 import { Check } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
 
 export default function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
-  const handleSelectPlan = (plan: string) => {
+  const handleSelectPlan = async (plan: string) => {
     setSelectedPlan(plan);
-    console.log(`Selected plan: ${plan}`);
+    
+    // Free plan - just redirect to dashboard
+    if (plan === 'Free') {
+      if (!isAuthenticated) {
+        window.location.href = '/api/login';
+        return;
+      }
+      setLocation('/dashboard');
+      return;
+    }
+
+    // Enterprise - show contact message
+    if (plan === 'Enterprise') {
+      toast({
+        title: "Contact Sales",
+        description: "Please email sales@hosterget.com for enterprise pricing.",
+      });
+      return;
+    }
+
+    // Pro plan - create checkout session
+    if (plan === 'Pro') {
+      if (!isAuthenticated) {
+        // Save intended plan and redirect to login
+        sessionStorage.setItem('intendedPlan', 'pro');
+        window.location.href = '/api/login';
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const response = await apiRequest('POST', '/api/create-checkout-session', {
+          plan: 'pro'
+        });
+        const data = await response.json();
+        
+        if (data.url) {
+          window.location.href = data.url;
+        }
+      } catch (error: any) {
+        toast({
+          title: "Error",
+          description: error.message || "Failed to create checkout session",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -61,7 +116,7 @@ export default function Pricing() {
                   '99.9% uptime SLA'
                 ]}
                 recommended={true}
-                ctaText="Start Free Trial"
+                ctaText={isLoading && selectedPlan === 'Pro' ? "Loading..." : "Subscribe Now"}
                 onSelect={() => handleSelectPlan('Pro')}
               />
               <PricingCard
