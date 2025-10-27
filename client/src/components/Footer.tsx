@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import logoIcon from '@assets/generated_images/Transparent_cloud_logo_icon_2327a1b6.png';
+import { Logo } from "./Logo";
 
 export function Footer() {
   return (
@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <img src={logoIcon} alt="HosterGet" className="h-12 w-12 object-contain" />
+              <Logo className="h-10 w-10" />
               <span className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent tracking-tight">
                 HosterGet
               </span>
