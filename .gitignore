@@ -4,19 +4,3 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# Replit specific
-.replit
-.upm
-.cache
-.config
-
-# Build artifacts
-*.log
-npm-debug.log*
-.lock
