@@ -60,7 +60,16 @@ export default function Home() {
       
       {/* Hero Section - DigitalOcean inspired */}
       <section className="relative bg-primary py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-30"
+        >
+          <source src="https://www.digitalocean.com/videos/GradientAI_1920x1080.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/70 to-primary/90" />
         <div className="container mx-auto px-6 text-center relative z-10">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white leading-tight max-w-5xl mx-auto" data-testid="text-hero-title">
             Simple, complete cloud APIs for even the most complex demands

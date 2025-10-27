@@ -14,7 +14,7 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
         <Link href="/">
           <a className="flex items-center gap-3 hover-elevate rounded-md px-2 py-1 -ml-2" data-testid="link-home">
-            <img src={logoImage} alt="HosterGet" className="h-7 w-7" />
+            <img src={logoImage} alt="HosterGet" className="h-10 w-10" />
             <span className="text-xl font-semibold text-foreground">HosterGet</span>
           </a>
         </Link>
