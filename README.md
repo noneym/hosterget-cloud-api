@@ -238,8 +238,12 @@ The Dockerfile uses multi-stage builds to:
 - ✅ Include health checks for container orchestration
 - ✅ Build both frontend and backend in one step
 - ✅ External package optimization (vite, nanoid marked as external in bundle)
+- ✅ Copy only built artifacts and necessary dependencies from builder
 
-**Note:** The production image includes all dependencies (including devDependencies) because `server/vite.ts` dynamically imports Vite at runtime. The esbuild bundle marks these packages as external to avoid bundling them, which keeps the bundle size small while requiring the packages to be available in node_modules at runtime.
+**Important Note:** The production image copies all node_modules from the builder stage because `server/vite.ts` dynamically imports Vite at runtime for serving static files in production mode. While this increases image size (~400MB), it's necessary because:
+1. The esbuild bundle marks vite/nanoid as external (keeping bundle small)
+2. These packages must be available in node_modules at runtime
+3. Attempting to install only production deps fails because NODE_ENV=production causes npm to skip devDependencies
 
 ## 🏗️ Project Structure
 
