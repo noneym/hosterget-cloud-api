@@ -12,7 +12,11 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogin = () => {
-    window.location.href = "/api/login";
+    window.location.href = "/login";
+  };
+
+  const handleSignup = () => {
+    window.location.href = "/register";
   };
 
   const handleLogout = () => {
@@ -89,7 +93,7 @@ export function Header() {
                 <Button 
                   size="sm" 
                   className="bg-primary hover:bg-primary/90"
-                  onClick={handleLogin}
+                  onClick={handleSignup}
                   data-testid="button-signup"
                 >
                   Sign up
@@ -161,7 +165,7 @@ export function Header() {
                   <Button 
                     size="sm" 
                     className="w-full bg-primary"
-                    onClick={handleLogin}
+                    onClick={handleSignup}
                     data-testid="button-mobile-signup"
                   >
                     Sign up
