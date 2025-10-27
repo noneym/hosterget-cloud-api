@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun, Menu, X, ChevronDown } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import { useState } from "react";
-import logoIcon from '@assets/generated_images/HosterGet_icon_logo_minimal_4e8f0b33.png';
+import logoIcon from '@assets/generated_images/Transparent_cloud_logo_icon_2327a1b6.png';
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -12,16 +12,16 @@ export function Header() {
   return (
     <header className="w-full border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
-        <Link href="/">
-          <a className="flex items-center gap-3 hover-elevate rounded-md px-2 py-1 -ml-2" data-testid="link-home">
-            <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center p-1.5">
-              <img src={logoIcon} alt="HosterGet" className="w-full h-full object-contain" />
-            </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent tracking-tight">
-              HosterGet
-            </span>
-          </a>
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/">
+            <a className="flex items-center gap-3 hover-elevate rounded-md px-2 py-1 -ml-2" data-testid="link-home">
+              <img src={logoIcon} alt="HosterGet" className="h-12 w-12 object-contain" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent tracking-tight">
+                HosterGet
+              </span>
+            </a>
+          </Link>
+        </div>
 
         <nav className="hidden lg:flex items-center gap-1">
           <Link href="/services">
