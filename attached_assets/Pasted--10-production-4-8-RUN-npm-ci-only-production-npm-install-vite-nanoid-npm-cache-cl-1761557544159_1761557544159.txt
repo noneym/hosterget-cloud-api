@@ -1,0 +1,38 @@
+#10 [production 4/8] RUN npm ci --only=production &&     npm install vite nanoid &&     npm cache clean --force
+#10 0.140 npm warn config only Use `--omit=dev` to omit dev dependencies from the install.
+#10 CANCELED
+
+#11 [builder 6/6] RUN npm run vite build &&     npx esbuild server/index.ts     --platform=node     --packages=external     --external:vite     --external:nanoid     --bundle     --format=esm     --outdir=dist
+#11 0.172 npm error Missing script: "vite"
+#11 0.172 npm error
+#11 0.172 npm error To see a list of scripts, run:
+#11 0.172 npm error   npm run
+#11 0.175 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-27T09_30_18_097Z-debug-0.log
+#11 ERROR: process "/bin/sh -c npm run vite build &&     npx esbuild server/index.ts     --platform=node     --packages=external     --external:vite     --external:nanoid     --bundle     --format=esm     --outdir=dist" did not complete successfully: exit code: 1
+------
+ > [builder 6/6] RUN npm run vite build &&     npx esbuild server/index.ts     --platform=node     --packages=external     --external:vite     --external:nanoid     --bundle     --format=esm     --outdir=dist:
+0.172 npm error Missing script: "vite"
+0.172 npm error
+0.172 npm error To see a list of scripts, run:
+0.172 npm error   npm run
+0.175 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-27T09_30_18_097Z-debug-0.log
+------
+Dockerfile:28
+--------------------
+  27 |     # Mark vite and nanoid as external to avoid bundling them into dist/index.js
+  28 | >>> RUN npm run vite build && \
+  29 | >>>     npx esbuild server/index.ts \
+  30 | >>>     --platform=node \
+  31 | >>>     --packages=external \
+  32 | >>>     --external:vite \
+  33 | >>>     --external:nanoid \
+  34 | >>>     --bundle \
+  35 | >>>     --format=esm \
+  36 | >>>     --outdir=dist
+  37 |     
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c npm run vite build &&     npx esbuild server/index.ts     --platform=node     --packages=external     --external:vite     --external:nanoid     --bundle     --format=esm     --outdir=dist" did not complete successfully: exit code: 1
+##########################################
+### Error
+### Mon, 27 Oct 2025 09:30:18 GMT
+##########################################

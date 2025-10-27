@@ -25,7 +25,7 @@ COPY . .
 # Build frontend (Vite) and backend (esbuild)
 # This creates dist/public/ for frontend and dist/index.js for backend
 # Mark vite and nanoid as external to avoid bundling them into dist/index.js
-RUN npm run vite build && \
+RUN npx vite build && \
     npx esbuild server/index.ts \
     --platform=node \
     --packages=external \
