@@ -13,8 +13,11 @@ export function Header() {
     <header className="w-full border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
         <Link href="/">
-          <a className="flex items-center hover-elevate rounded-md px-2 py-1 -ml-2" data-testid="link-home">
-            <img src={logoImage} alt="HosterGet" className="h-8" />
+          <a className="flex items-center gap-2 hover-elevate rounded-md px-2 py-1 -ml-2" data-testid="link-home">
+            <div className="h-9 w-9 rounded bg-primary flex items-center justify-center font-bold text-white text-lg">
+              H
+            </div>
+            <span className="text-xl font-bold">HosterGet</span>
           </a>
         </Link>
 

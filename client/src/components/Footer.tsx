@@ -7,8 +7,11 @@ export function Footer() {
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
-            <div className="mb-4">
-              <img src={logoImage} alt="HosterGet" className="h-8" />
+            <div className="flex items-center gap-2 mb-4">
+              <div className="h-9 w-9 rounded bg-primary flex items-center justify-center font-bold text-white text-lg">
+                H
+              </div>
+              <span className="text-xl font-bold">HosterGet</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Enterprise-grade cloud APIs trusted by 10,000+ developers worldwide.
