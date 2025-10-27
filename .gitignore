@@ -1,6 +1,38 @@
+# Dependencies
 node_modules
+
+# Build output
 dist
+
+# Environment variables (IMPORTANT: Never commit these!)
+.env
+.env.*
+!.env.example
+
+# OS files
 .DS_Store
+
+# Server files
 server/public
+
+# Vite config
 vite.config.ts.*
+
+# Archives
 *.tar.gz
+
+# Logs
+*.log
+logs
+npm-debug.log*
+
+# Editor directories
+.vscode
+.idea
+*.swp
+*.swo
+
+# Temporary files
+.cache
+.tmp
+*.tmp
