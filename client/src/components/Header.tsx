@@ -1,66 +1,66 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Moon, Sun, Menu, X, ChevronDown } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import { useState } from "react";
-import logoImage from '@assets/generated_images/HosterGet_company_logo_745cb216.png';
+import logoImage from '@assets/generated_images/HosterGet_minimalist_logo_f99701bc.png';
 
 export function Header() {
   const { theme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+    <header className="w-full border-b bg-background">
+      <div className="container mx-auto flex h-16 items-center justify-between px-6">
         <Link href="/">
-          <a className="flex items-center space-x-2 hover-elevate rounded-md px-2 py-1" data-testid="link-home">
-            <div className="flex items-center gap-2">
-              <img src={logoImage} alt="HosterGet" className="h-8 w-8 rounded-md" />
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
-                HosterGet
-              </span>
-            </div>
+          <a className="flex items-center gap-3 hover-elevate rounded-md px-2 py-1 -ml-2" data-testid="link-home">
+            <img src={logoImage} alt="HosterGet" className="h-7 w-7" />
+            <span className="text-xl font-semibold text-foreground">HosterGet</span>
           </a>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-1">
           <Link href="/services">
-            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2 transition-colors" data-testid="link-services">
-              Services
+            <a className="text-sm font-medium hover-elevate rounded-md px-4 py-2 transition-colors" data-testid="link-services">
+              Products
             </a>
           </Link>
           <Link href="/pricing">
-            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2 transition-colors" data-testid="link-pricing">
+            <a className="text-sm font-medium hover-elevate rounded-md px-4 py-2 transition-colors" data-testid="link-pricing">
               Pricing
             </a>
           </Link>
           <Link href="/docs">
-            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2 transition-colors" data-testid="link-docs">
-              Documentation
+            <a className="text-sm font-medium hover-elevate rounded-md px-4 py-2 transition-colors" data-testid="link-docs">
+              Docs
             </a>
           </Link>
+          <a href="mailto:support@hosterget.com" className="text-sm font-medium hover-elevate rounded-md px-4 py-2 transition-colors">
+            Support
+          </a>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="hidden sm:flex"
             data-testid="button-theme-toggle"
           >
-            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
           
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-2">
             <Link href="/login">
               <a data-testid="link-login">
-                <Button variant="ghost">Log In</Button>
+                <Button variant="ghost" size="sm">Log in</Button>
               </a>
             </Link>
             <Link href="/signup">
               <a data-testid="link-signup">
-                <Button variant="default" className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90">
-                  Sign Up
+                <Button size="sm" className="bg-primary hover:bg-primary/90">
+                  Sign up
                 </Button>
               </a>
             </Link>
@@ -69,7 +69,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             data-testid="button-mobile-menu"
           >
@@ -79,33 +79,38 @@ export function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-background p-4 space-y-2">
-          <Link href="/services">
-            <a className="block hover-elevate rounded-md px-3 py-2" data-testid="link-mobile-services">
-              Services
-            </a>
-          </Link>
-          <Link href="/pricing">
-            <a className="block hover-elevate rounded-md px-3 py-2" data-testid="link-mobile-pricing">
-              Pricing
-            </a>
-          </Link>
-          <Link href="/docs">
-            <a className="block hover-elevate rounded-md px-3 py-2" data-testid="link-mobile-docs">
-              Documentation
-            </a>
-          </Link>
-          <div className="flex flex-col gap-2 pt-2">
-            <Link href="/login">
-              <a data-testid="link-mobile-login">
-                <Button variant="ghost" className="w-full">Log In</Button>
+        <div className="lg:hidden border-t bg-background">
+          <div className="container mx-auto px-6 py-4 space-y-1">
+            <Link href="/services">
+              <a className="block hover-elevate rounded-md px-4 py-3 text-sm font-medium" data-testid="link-mobile-services">
+                Products
               </a>
             </Link>
-            <Link href="/signup">
-              <a data-testid="link-mobile-signup">
-                <Button variant="default" className="w-full bg-gradient-to-r from-primary to-purple-600">Sign Up</Button>
+            <Link href="/pricing">
+              <a className="block hover-elevate rounded-md px-4 py-3 text-sm font-medium" data-testid="link-mobile-pricing">
+                Pricing
               </a>
             </Link>
+            <Link href="/docs">
+              <a className="block hover-elevate rounded-md px-4 py-3 text-sm font-medium" data-testid="link-mobile-docs">
+                Docs
+              </a>
+            </Link>
+            <a href="mailto:support@hosterget.com" className="block hover-elevate rounded-md px-4 py-3 text-sm font-medium">
+              Support
+            </a>
+            <div className="pt-4 border-t mt-4 space-y-2">
+              <Link href="/login">
+                <a data-testid="link-mobile-login">
+                  <Button variant="outline" size="sm" className="w-full">Log in</Button>
+                </a>
+              </Link>
+              <Link href="/signup">
+                <a data-testid="link-mobile-signup">
+                  <Button size="sm" className="w-full bg-primary">Sign up</Button>
+                </a>
+              </Link>
+            </div>
           </div>
         </div>
       )}

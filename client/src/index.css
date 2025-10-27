@@ -132,17 +132,17 @@
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
 
-  --background: 222 6% 8%;
+  --background: 0 0% 5%;
 
-  --foreground: 210 6% 93%;
+  --foreground: 0 0% 98%;
 
-  --border: 220 6% 18%;
+  --border: 220 13% 18%;
 
-  --card: 220 5% 11%;
+  --card: 220 13% 8%;
 
-  --card-foreground: 210 6% 93%;
+  --card-foreground: 0 0% 98%;
 
-  --card-border: 220 6% 16%;
+  --card-border: 220 13% 15%;
 
   --sidebar: 218 6% 13%;
 
@@ -166,9 +166,9 @@
 
   --popover-border: 220 7% 21%;
 
-  --primary: 217 91% 52%;
+  --primary: 211 100% 50%;
 
-  --primary-foreground: 210 100% 98%;
+  --primary-foreground: 0 0% 100%;
 
   --secondary: 220 8% 20%;
 

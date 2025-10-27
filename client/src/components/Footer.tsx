@@ -1,32 +1,49 @@
 import { Link } from "wouter";
-import logoImage from '@assets/generated_images/HosterGet_company_logo_745cb216.png';
+import logoImage from '@assets/generated_images/HosterGet_minimalist_logo_f99701bc.png';
 
 export function Footer() {
   return (
-    <footer className="border-t mt-auto bg-muted/30">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <img src={logoImage} alt="HosterGet" className="h-8 w-8 rounded-md" />
-              <span className="text-lg font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
-                HosterGet
-              </span>
+    <footer className="border-t bg-background">
+      <div className="container mx-auto px-6 py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          <div className="col-span-2 md:col-span-1">
+            <div className="flex items-center gap-3 mb-4">
+              <img src={logoImage} alt="HosterGet" className="h-8 w-8" />
+              <span className="text-lg font-semibold">HosterGet</span>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Enterprise-grade cloud APIs trusted by 10,000+ developers worldwide.
             </p>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Platform</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="font-semibold mb-4 text-sm">Products</h4>
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link href="/services">
                   <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-services">
-                    Services
+                    GPU Services
                   </a>
                 </Link>
               </li>
+              <li>
+                <Link href="/services">
+                  <a className="text-muted-foreground hover:text-foreground transition-colors">
+                    Face Analyzer
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/services">
+                  <a className="text-muted-foreground hover:text-foreground transition-colors">
+                    Identity Check
+                  </a>
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-4 text-sm">Company</h4>
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link href="/pricing">
                   <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-pricing">
@@ -41,28 +58,16 @@ export function Footer() {
                   </a>
                 </Link>
               </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Support</h4>
-            <ul className="space-y-2 text-sm">
               <li>
                 <a href="mailto:support@hosterget.com" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-email">
-                  Email Support
+                  Support
                 </a>
-              </li>
-              <li>
-                <Link href="/status">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-status">
-                    Status
-                  </a>
-                </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="font-semibold mb-4 text-sm">Legal</h4>
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link href="/terms">
                   <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-terms">
@@ -80,8 +85,8 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>© 2024 HosterGet. All rights reserved.</p>
+        <div className="pt-8 border-t">
+          <p className="text-sm text-muted-foreground">© 2024 HosterGet. All rights reserved.</p>
         </div>
       </div>
     </footer>

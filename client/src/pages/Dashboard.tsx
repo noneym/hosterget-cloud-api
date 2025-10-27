@@ -25,13 +25,13 @@ export default function Dashboard() {
       <Header />
       
       <main className="flex-1 bg-muted/30">
-        <div className="container mx-auto px-4 py-8">
-          <div className="mb-8">
+        <div className="container mx-auto px-6 py-12">
+          <div className="mb-10">
             <h1 className="text-4xl font-bold mb-2" data-testid="text-dashboard-title">Dashboard</h1>
             <p className="text-muted-foreground text-lg">Monitor your API usage and manage your account</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <StatsCard
               title="Total API Calls"
               value="24,847"
@@ -58,18 +58,18 @@ export default function Dashboard() {
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
             <Card className="lg:col-span-2">
               <CardHeader>
                 <CardTitle>Usage Overview</CardTitle>
                 <CardDescription>API calls over the last 30 days</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="h-72 flex items-center justify-center border-2 border-dashed rounded-lg">
+                <div className="h-80 flex items-center justify-center border-2 border-dashed rounded-lg">
                   <div className="text-center text-muted-foreground">
-                    <TrendingUp className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm">Usage chart visualization</p>
-                    <p className="text-xs">Real-time analytics coming soon</p>
+                    <TrendingUp className="h-16 w-16 mx-auto mb-4 opacity-30" />
+                    <p className="font-medium">Usage Chart</p>
+                    <p className="text-sm">Real-time analytics visualization</p>
                   </div>
                 </div>
               </CardContent>
@@ -78,7 +78,7 @@ export default function Dashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>Quick Actions</CardTitle>
-                <CardDescription>Common tasks and shortcuts</CardDescription>
+                <CardDescription>Common tasks</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button 
@@ -88,13 +88,13 @@ export default function Dashboard() {
                   data-testid="button-create-key"
                 >
                   <Plus className="mr-2 h-4 w-4" />
-                  Create New API Key
+                  Create API Key
                 </Button>
                 <Link href="/docs">
                   <a className="block" data-testid="link-view-docs">
                     <Button variant="outline" className="w-full justify-start">
                       <Zap className="mr-2 h-4 w-4" />
-                      View Documentation
+                      Documentation
                     </Button>
                   </a>
                 </Link>
@@ -102,7 +102,7 @@ export default function Dashboard() {
                   <a className="block" data-testid="link-add-credits">
                     <Button variant="outline" className="w-full justify-start">
                       <DollarSign className="mr-2 h-4 w-4" />
-                      Purchase Credits
+                      Buy Credits
                     </Button>
                   </a>
                 </Link>
@@ -116,9 +116,9 @@ export default function Dashboard() {
                 <CardTitle>API Keys</CardTitle>
                 <CardDescription>Manage your API keys and access tokens</CardDescription>
               </div>
-              <Button onClick={handleCreateKey} data-testid="button-header-create-key" className="bg-gradient-to-r from-primary to-purple-600">
+              <Button onClick={handleCreateKey} data-testid="button-header-create-key" className="bg-primary">
                 <Plus className="mr-2 h-4 w-4" />
-                Create Key
+                New Key
               </Button>
             </CardHeader>
             <CardContent className="space-y-4">

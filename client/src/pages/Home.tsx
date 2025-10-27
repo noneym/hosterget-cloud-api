@@ -6,8 +6,7 @@ import { TestimonialCard } from "@/components/TestimonialCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
-import { Cpu, Scan, Shield, Zap, Lock, Globe, Brain, TrendingUp, Check, Users, Star } from "lucide-react";
-import heroImage from '@assets/generated_images/Futuristic_cloud_computing_hero_background_b2b189f4.png';
+import { Cpu, Scan, Shield, Zap, Lock, Globe, Brain, TrendingUp, Check, Users, ArrowRight } from "lucide-react";
 
 export default function Home() {
   const testimonials = [
@@ -59,161 +58,109 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <section 
-        className="relative py-24 md:py-40 overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-background/50" />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <Badge className="mb-6 bg-primary/20 text-primary border-primary/30 backdrop-blur" data-testid="badge-trusted">
-            <Users className="h-3 w-3 mr-1" />
-            Trusted by 10,000+ developers
-          </Badge>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white" data-testid="text-hero-title">
-            Enterprise <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Cloud APIs</span>
-            <br />
-            Built for Scale
+      {/* Hero Section - DigitalOcean inspired */}
+      <section className="relative bg-primary py-20 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
+        <div className="container mx-auto px-6 text-center relative z-10">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white leading-tight max-w-5xl mx-auto" data-testid="text-hero-title">
+            Simple, complete cloud APIs for even the most complex demands
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto leading-relaxed" data-testid="text-hero-subtitle">
-            GPU acceleration, AI-powered face analysis, and identity verification APIs. Build faster, secure smarter, scale infinitely.
+          <p className="text-lg md:text-xl mb-10 text-white/90 max-w-3xl mx-auto leading-relaxed" data-testid="text-hero-subtitle">
+            GPU acceleration, AI-powered analysis, and identity verification. Build faster with enterprise-grade infrastructure.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <Link href="/signup">
               <a data-testid="link-hero-signup">
-                <Button size="lg" className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-lg px-8">
-                  Start Free Trial
+                <Button size="lg" variant="secondary" className="text-base px-8 bg-white text-primary hover:bg-white/90">
+                  Sign up with email
                 </Button>
               </a>
             </Link>
-            <Link href="/services">
-              <a data-testid="link-hero-explore">
-                <Button size="lg" variant="outline" className="bg-background/20 backdrop-blur border-white/30 text-white hover:bg-background/30 text-lg px-8">
-                  Explore APIs
+            <span className="text-white/70 text-sm">or</span>
+            <Link href="/signup">
+              <a data-testid="link-hero-github">
+                <Button size="lg" variant="outline" className="text-base px-8 border-white/30 text-white hover:bg-white/10">
+                  Sign up with GitHub
                 </Button>
               </a>
             </Link>
-          </div>
-          <div className="flex items-center justify-center gap-6 text-sm text-gray-300">
-            <div className="flex items-center gap-1">
-              <Check className="h-4 w-4 text-green-400" />
-              <span>No credit card required</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Check className="h-4 w-4 text-green-400" />
-              <span>Free tier included</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Check className="h-4 w-4 text-green-400" />
-              <span>Cancel anytime</span>
-            </div>
           </div>
         </div>
       </section>
 
+      {/* Trust Bar */}
+      <section className="py-12 bg-muted/30 border-b">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-8">
+            <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+              Trusted by developers at
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-12 opacity-60">
+            <div className="text-xl font-bold">TechVision</div>
+            <div className="text-xl font-bold">DataFlow</div>
+            <div className="text-xl font-bold">SecureAuth</div>
+            <div className="text-xl font-bold">CloudScale</div>
+            <div className="text-xl font-bold">FinTech Global</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products Section */}
       <section className="py-20 md:py-28 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4">Our Services</Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-ecosystem-title">
-              Complete API Ecosystem
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6" data-testid="text-ecosystem-title">
+              See our products in action
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Everything you need to build intelligent, secure applications
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              HosterGet's suite of APIs is designed to be with you on every step of your journey, whether you want to do it yourself or get help from our support team.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <ServiceCard
               icon={Cpu}
               title="GPU Services"
-              description="Access powerful GPU-accelerated models for image generation, video processing, and deep learning tasks."
+              description="Set up powerful GPU-accelerated models in seconds to power your next AI project."
               status="Live"
-              metric="GPU-accelerated"
-              tags={['GPU', 'AI', 'Machine Learning']}
+              metric="Sub-second response"
+              tags={['GPU', 'AI', 'ML']}
               href="/services/gpu"
             />
             <ServiceCard
               icon={Scan}
               title="Face Analyzer"
-              description="Advanced facial recognition with emotion detection, age estimation, and 10+ attribute analysis."
+              description="Advanced facial recognition with 95%+ accuracy for emotion detection and demographics."
               status="Beta"
               metric="95%+ accuracy"
-              tags={['Computer Vision', 'Detection']}
+              tags={['Computer Vision', 'AI']}
               href="/services/face-analyzer"
             />
             <ServiceCard
               icon={Shield}
-              title="Identity Check"
-              description="Email & IP verification with VPN/Proxy detection and comprehensive fraud prevention."
+              title="Identity Verification"
+              description="Comprehensive email and IP verification with fraud detection built-in."
               status="Live"
-              metric="1K requests/day"
-              tags={['Security', 'Verification', 'Free']}
+              metric="1K free requests/day"
+              tags={['Security', 'Free']}
               href="/services/identity"
             />
           </div>
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-gradient-to-b from-muted/30 to-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4">Why HosterGet</Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Built for Developers</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Enterprise features with developer-friendly pricing
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <FeatureCard
-              icon={Zap}
-              title="Lightning Fast"
-              description="Sub-100ms response times globally. Optimized infrastructure ensures your users get instant results."
-            />
-            <FeatureCard
-              icon={TrendingUp}
-              title="Enterprise Scale"
-              description="99.9%+ uptime SLA. Built on battle-tested infrastructure serving billions of requests monthly."
-            />
-            <FeatureCard
-              icon={Lock}
-              title="Security First"
-              description="End-to-end encryption, SOC 2 compliant, and GDPR ready. Your data security is our priority."
-            />
-            <FeatureCard
-              icon={Brain}
-              title="AI-Powered"
-              description="State-of-the-art ML models continuously trained on diverse datasets for maximum accuracy."
-            />
-            <FeatureCard
-              icon={Globe}
-              title="Global CDN"
-              description="Multi-region deployment across 15+ data centers. Low latency access from anywhere."
-            />
-            <FeatureCard
-              icon={Check}
-              title="Generous Free Tier"
-              description="Start building for free. Scale seamlessly as you grow without surprise bills."
-            />
-          </div>
-        </div>
-      </section>
-
+      {/* Customer Stories */}
       <section className="py-20 md:py-28 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4">
-              <Star className="h-3 w-3 mr-1 fill-yellow-500 text-yellow-500" />
-              10,000+ Happy Customers
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Loved by Developers</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              See what our customers have to say about HosterGet
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+              Developers growing with HosterGet
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              See how 10,000+ developers and startups around the globe are building and scaling their applications on HosterGet while saving money.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <TestimonialCard key={index} {...testimonial} />
             ))}
@@ -221,29 +168,81 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-gradient-to-b from-background to-muted/30">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Get Started?</h2>
-          <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-            Join thousands of developers building the future with HosterGet. Get instant access to all APIs with our generous free tier.
+      {/* Why Choose Section */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+              Keep more of your money—and more of your sanity
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              With the simple, scalable cloud APIs built for developers
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            <div className="space-y-4">
+              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <Zap className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold">Build and ship faster</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Our cloud is built to be simple and powerful, so you can spend your time focusing on building apps, not pulling your hair out.
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <TrendingUp className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold">Stay on budget</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                With predictable pricing and generous free tiers, there are never any surprises about what you will pay for our products.
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <Users className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold">Real support from real people</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Get free, personalized support or upgrade to paid plans to receive dedicated help and faster response times.
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <Globe className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold">Reliable infrastructure</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Our globally distributed data centers and 99.99% uptime SLA help you consistently deliver experiences your customers will love.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 md:py-28 bg-muted/30">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">Get started for free</h2>
+          <p className="text-muted-foreground text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+            Join thousands of developers building the future. All plans include generous free tiers so you can start building immediately.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/signup">
               <a data-testid="link-cta-signup">
-                <Button size="lg" className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-lg px-8">
-                  Start Building Now
+                <Button size="lg" className="text-base px-8 bg-primary">
+                  Sign up now
                 </Button>
               </a>
             </Link>
-            <Link href="/pricing">
-              <a data-testid="link-cta-pricing">
-                <Button size="lg" variant="outline" className="text-lg px-8">View Pricing</Button>
+            <Link href="/docs">
+              <a data-testid="link-cta-docs">
+                <Button size="lg" variant="outline" className="text-base px-8">
+                  Read documentation
+                </Button>
               </a>
             </Link>
           </div>
-          <p className="text-sm text-muted-foreground mt-6">
-            No credit card required • Free tier includes all features • Cancel anytime
-          </p>
         </div>
       </section>
 
