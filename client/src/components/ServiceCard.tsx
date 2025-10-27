@@ -54,12 +54,10 @@ export function ServiceCard({
             </Badge>
           ))}
         </div>
-        <Link href={href}>
-          <a data-testid={`link-explore-${title.toLowerCase().replace(/\s+/g, '-')}`}>
-            <Button variant="ghost" className="w-full group-hover:bg-accent">
-              Explore <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </a>
+        <Link href={href} className="block">
+          <Button variant="ghost" className="w-full group-hover:bg-accent" data-testid={`button-explore-${title.toLowerCase().replace(/\s+/g, '-')}`}>
+            Explore <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
         </Link>
       </CardContent>
     </Card>

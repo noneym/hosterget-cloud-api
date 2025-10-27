@@ -84,21 +84,25 @@ export default function Home() {
             GPU acceleration, AI-powered analysis, and identity verification. Build faster with enterprise-grade infrastructure.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <Link href="/signup">
-              <a data-testid="link-hero-signup">
-                <Button size="lg" variant="secondary" className="text-base px-8 bg-white text-primary hover:bg-white/90">
-                  Sign up with email
-                </Button>
-              </a>
-            </Link>
+            <Button 
+              size="lg" 
+              variant="secondary" 
+              className="text-base px-8 bg-white text-primary hover:bg-white/90"
+              onClick={() => window.location.href = '/api/login'}
+              data-testid="button-hero-signup"
+            >
+              Sign up with email
+            </Button>
             <span className="text-white/70 text-sm">or</span>
-            <Link href="/signup">
-              <a data-testid="link-hero-github">
-                <Button size="lg" variant="outline" className="text-base px-8 border-white/30 text-white hover:bg-white/10">
-                  Sign up with GitHub
-                </Button>
-              </a>
-            </Link>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-base px-8 border-white/30 text-white hover:bg-white/10"
+              onClick={() => window.location.href = '/api/login'}
+              data-testid="button-hero-github"
+            >
+              Sign up with GitHub
+            </Button>
           </div>
         </div>
       </section>
@@ -243,19 +247,23 @@ export default function Home() {
             Join thousands of developers building the future. All plans include generous free tiers so you can start building immediately.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/signup">
-              <a data-testid="link-cta-signup">
-                <Button size="lg" className="text-base px-8 bg-primary">
-                  Sign up now
-                </Button>
-              </a>
-            </Link>
-            <Link href="/docs">
-              <a data-testid="link-cta-docs">
-                <Button size="lg" variant="outline" className="text-base px-8">
-                  Read documentation
-                </Button>
-              </a>
+            <Button 
+              size="lg" 
+              className="text-base px-8 bg-primary"
+              onClick={() => window.location.href = '/api/login'}
+              data-testid="button-cta-signup"
+            >
+              Sign up now
+            </Button>
+            <Link href="/docs" className="inline-block">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-base px-8"
+                data-testid="button-cta-docs"
+              >
+                Read documentation
+              </Button>
             </Link>
           </div>
         </div>

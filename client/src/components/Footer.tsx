@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import logoIcon from '@assets/generated_images/Blue_cloud_hosting_logo_transparent_6f6c4e19.png';
+import { Logo } from "./Logo";
 
 export function Footer() {
   return (
@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <img src={logoIcon} alt="HosterGet Logo" className="h-9 w-9 object-contain" />
+              <Logo className="h-9 w-9" />
               <span className="text-xl font-bold tracking-tight">
                 HosterGet
               </span>
@@ -21,24 +21,18 @@ export function Footer() {
             <h4 className="font-semibold mb-4 text-sm">Products</h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/services">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-services">
-                    GPU Services
-                  </a>
+                <Link href="/services" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-services">
+                  GPU Services
                 </Link>
               </li>
               <li>
-                <Link href="/services">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors">
-                    Face Analyzer
-                  </a>
+                <Link href="/services" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Face Analyzer
                 </Link>
               </li>
               <li>
-                <Link href="/services">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors">
-                    Identity Check
-                  </a>
+                <Link href="/services" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Identity Check
                 </Link>
               </li>
             </ul>
@@ -47,17 +41,13 @@ export function Footer() {
             <h4 className="font-semibold mb-4 text-sm">Company</h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/pricing">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-pricing">
-                    Pricing
-                  </a>
+                <Link href="/pricing" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-pricing">
+                  Pricing
                 </Link>
               </li>
               <li>
-                <Link href="/docs">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-docs">
-                    Documentation
-                  </a>
+                <Link href="/docs" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-docs">
+                  Documentation
                 </Link>
               </li>
               <li>
@@ -71,17 +61,13 @@ export function Footer() {
             <h4 className="font-semibold mb-4 text-sm">Legal</h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/terms">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-terms">
-                    Terms of Service
-                  </a>
+                <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-terms">
+                  Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/privacy">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-privacy">
-                    Privacy Policy
-                  </a>
+                <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-privacy">
+                  Privacy Policy
                 </Link>
               </li>
             </ul>
