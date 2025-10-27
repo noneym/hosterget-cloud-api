@@ -89,7 +89,7 @@ export default function Home() {
               size="lg" 
               variant="secondary" 
               className="text-base px-8 bg-white text-primary hover:bg-white/90"
-              onClick={() => window.location.href = '/api/login'}
+              onClick={() => window.location.href = '/login'}
               data-testid="button-hero-signup"
             >
               Sign up with email
@@ -99,7 +99,7 @@ export default function Home() {
               size="lg" 
               variant="outline" 
               className="text-base px-8 border-white/30 text-white hover:bg-white/10"
-              onClick={() => window.location.href = '/api/login'}
+              onClick={() => window.location.href = '/login'}
               data-testid="button-hero-github"
             >
               Sign up with GitHub
@@ -251,7 +251,7 @@ export default function Home() {
             <Button 
               size="lg" 
               className="text-base px-8 bg-primary"
-              onClick={() => window.location.href = '/api/login'}
+              onClick={() => window.location.href = '/login'}
               data-testid="button-cta-signup"
             >
               Sign up now

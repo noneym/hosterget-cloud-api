@@ -9,17 +9,26 @@ import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
 import type { User } from "@shared/schema";
 
+// Validate required environment variables
+if (!process.env.SESSION_SECRET) {
+  throw new Error("SESSION_SECRET environment variable is required for secure session management");
+}
+
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL environment variable is required");
+}
+
 // Session store setup
 function getSession() {
   const PgSession = connectPg(session);
   
   return session({
     store: new PgSession({
-      conString: process.env.DATABASE_URL,
+      conString: process.env.DATABASE_URL!,
       createTableIfMissing: true,
       tableName: 'sessions',
     }),
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -86,12 +95,25 @@ export async function setupAuth(app: Express) {
             return done(new Error('No email from Google'));
           }
 
-          // Check if user exists
+          // Check if user exists by email
           let user = await storage.getUserByEmail(email);
 
           if (user) {
-            // Update user info from Google profile
+            // Security: Prevent OAuth account pre-hijacking
+            // If account exists with password (local auth), don't auto-link to OAuth
+            if (user.password) {
+              return done(new Error('Email already registered. Please sign in with email/password.'));
+            }
+
+            // Verify this user was created via Google OAuth
+            if (user.authProvider !== 'google' && user.providerId) {
+              return done(new Error('Email already registered with different provider'));
+            }
+
+            // Update user info from Google profile and link to Google
             user = await storage.updateUser(user.id, {
+              authProvider: 'google',
+              providerId: profile.id,
               firstName: profile.name?.givenName || user.firstName,
               lastName: profile.name?.familyName || user.lastName,
               profileImageUrl: profile.photos?.[0]?.value || user.profileImageUrl,
@@ -134,15 +156,31 @@ export async function setupAuth(app: Express) {
       },
       async (accessToken: string, refreshToken: string, profile: any, done: any) => {
         try {
-          // GitHub might not provide email if it's private
-          const email = profile.emails?.[0]?.value || `${profile.username}@github.local`;
+          // GitHub email is required - reject if not provided
+          const email = profile.emails?.[0]?.value;
+          if (!email) {
+            return done(new Error('GitHub email not available. Please make your email public in GitHub settings.'));
+          }
 
-          // Check if user exists
+          // Check if user exists by email
           let user = await storage.getUserByEmail(email);
 
           if (user) {
-            // Update user info from GitHub profile
+            // Security: Prevent OAuth account pre-hijacking
+            // If account exists with password (local auth), don't auto-link to OAuth
+            if (user.password) {
+              return done(new Error('Email already registered. Please sign in with email/password.'));
+            }
+
+            // Verify this user was created via GitHub OAuth
+            if (user.authProvider !== 'github' && user.providerId) {
+              return done(new Error('Email already registered with different provider'));
+            }
+
+            // Update user info from GitHub profile and link to GitHub
             user = await storage.updateUser(user.id, {
+              authProvider: 'github',
+              providerId: profile.id,
               firstName: profile.displayName || profile.username || user.firstName,
               profileImageUrl: profile.photos?.[0]?.value || user.profileImageUrl,
             }) as User;

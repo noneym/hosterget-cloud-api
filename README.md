@@ -19,7 +19,7 @@ HosterGet is a comprehensive SaaS platform providing developer-focused cloud API
 - **Identity Verification API** - Secure identity verification and KYC services
 
 ### Platform Features
-- 🔐 **Secure Authentication** - OpenID Connect (OIDC) via Replit Auth
+- 🔐 **Secure Authentication** - Email/Password + Google OAuth + GitHub OAuth
 - 💳 **Subscription Management** - Stripe-powered billing (Free, Pro $25/month, Enterprise)
 - 🔑 **API Key Management** - Generate, manage, and track API keys with `hg_` prefix
 - 📊 **Usage Analytics** - Real-time request tracking and usage statistics
@@ -46,7 +46,10 @@ HosterGet is a comprehensive SaaS platform providing developer-focused cloud API
 - **Stripe API** - Payment processing
 
 ### Authentication & Security
-- **OpenID Connect (OIDC)** - via Replit Auth
+- **Passport.js** - Multiple authentication strategies
+- **Local Strategy** - Email/password with bcrypt hashing
+- **Google OAuth 2.0** - Sign in with Google
+- **GitHub OAuth** - Sign in with GitHub
 - **Session-based auth** - Secure cookie storage
 - **PostgreSQL session store** - Scalable session management
 
@@ -55,7 +58,8 @@ HosterGet is a comprehensive SaaS platform providing developer-focused cloud API
 - Node.js 18+ 
 - PostgreSQL database
 - Stripe account (for payment processing)
-- Replit Auth OIDC provider (or custom OIDC provider)
+- Google Cloud Project (for Google OAuth - optional)
+- GitHub OAuth App (for GitHub OAuth - optional)
 
 ## 🔧 Environment Variables
 
@@ -73,8 +77,20 @@ PGDATABASE=your-database-name
 
 ### Authentication
 ```bash
+# Required for session management
 SESSION_SECRET=your-session-secret-key-min-32-chars
-ISSUER_URL=https://replit.com/oidc  # Optional, defaults to Replit OIDC
+
+# Google OAuth (Optional - for "Sign in with Google")
+# Get from: https://console.cloud.google.com/apis/credentials
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_CALLBACK_URL=https://yourdomain.com/api/auth/google/callback
+
+# GitHub OAuth (Optional - for "Sign in with GitHub")
+# Get from: https://github.com/settings/developers
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
+GITHUB_CALLBACK_URL=https://yourdomain.com/api/auth/github/callback
 ```
 
 ### Stripe Payment Processing
@@ -313,7 +329,7 @@ npm start
 - ✅ Configure all environment variables
 - ✅ Set up PostgreSQL database
 - ✅ Configure Stripe webhook endpoint
-- ✅ Set OIDC redirect URLs
+- ✅ Set OAuth callback URLs (Google/GitHub if using OAuth)
 - ✅ Run database migrations (`npm run db:push`)
 
 ### Replit Deployment
@@ -339,6 +355,63 @@ Minimum payment amount: $12 USD
 API keys follow the format: `hg_` + 64 hexadecimal characters
 
 Example: `hg_a1b2c3d4e5f6...` (68 chars total)
+
+## 🔐 OAuth Setup Guide
+
+### Google OAuth Setup
+
+1. **Create Google Cloud Project**
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select existing one
+
+2. **Enable Google+ API**
+   - Navigate to "APIs & Services" → "Library"
+   - Search for "Google+ API" and enable it
+
+3. **Create OAuth 2.0 Credentials**
+   - Go to "APIs & Services" → "Credentials"
+   - Click "Create Credentials" → "OAuth client ID"
+   - Application type: "Web application"
+   - Authorized redirect URIs: `https://yourdomain.com/api/auth/google/callback`
+   - Copy the Client ID and Client Secret
+
+4. **Add to Environment Variables**
+   ```bash
+   GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=your-client-secret
+   GOOGLE_CALLBACK_URL=https://yourdomain.com/api/auth/google/callback
+   ```
+
+### GitHub OAuth Setup
+
+1. **Create GitHub OAuth App**
+   - Go to [GitHub Developer Settings](https://github.com/settings/developers)
+   - Click "New OAuth App"
+
+2. **Configure OAuth App**
+   - Application name: "HosterGet Cloud API"
+   - Homepage URL: `https://yourdomain.com`
+   - Authorization callback URL: `https://yourdomain.com/api/auth/github/callback`
+   - Click "Register application"
+
+3. **Generate Client Secret**
+   - Click "Generate a new client secret"
+   - Copy the Client ID and Client Secret
+
+4. **Add to Environment Variables**
+   ```bash
+   GITHUB_CLIENT_ID=your-github-client-id
+   GITHUB_CLIENT_SECRET=your-github-client-secret
+   GITHUB_CALLBACK_URL=https://yourdomain.com/api/auth/github/callback
+   ```
+
+### Local Development
+
+For local development (http://localhost:5000), use these callback URLs:
+- Google: `http://localhost:5000/api/auth/google/callback`
+- GitHub: `http://localhost:5000/api/auth/github/callback`
+
+**Note:** OAuth providers are optional. The application works with email/password authentication even if OAuth is not configured.
 
 ## 📖 Documentation
 

@@ -10,6 +10,8 @@ import Services from "@/pages/Services";
 import Pricing from "@/pages/Pricing";
 import Dashboard from "@/pages/Dashboard";
 import Docs from "@/pages/Docs";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -33,15 +35,19 @@ function Router() {
         <>
           {/* Public routes for non-authenticated users */}
           <Route path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
           <Route path="/docs" component={Docs} />
         </>
       ) : (
         <>
-          {/* Authenticated routes */}
+          {/* Authenticated routes - redirect to dashboard if trying to access login/register */}
           <Route path="/" component={Dashboard} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/login" component={Dashboard} />
+          <Route path="/register" component={Dashboard} />
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
           <Route path="/docs" component={Docs} />
