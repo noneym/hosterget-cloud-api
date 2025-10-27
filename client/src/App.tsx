@@ -9,7 +9,7 @@ import Home from "@/pages/Home";
 import Services from "@/pages/Services";
 import Pricing from "@/pages/Pricing";
 import Dashboard from "@/pages/Dashboard";
-import Documentation from "@/pages/Documentation";
+import Docs from "@/pages/Docs";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -35,7 +35,7 @@ function Router() {
           <Route path="/" component={Home} />
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
-          <Route path="/docs" component={Documentation} />
+          <Route path="/docs" component={Docs} />
         </>
       ) : (
         <>
@@ -44,7 +44,7 @@ function Router() {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
-          <Route path="/docs" component={Documentation} />
+          <Route path="/docs" component={Docs} />
         </>
       )}
       <Route component={NotFound} />

@@ -10,13 +10,25 @@ import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import type { ApiKey } from "@shared/schema";
+import type { ApiKey, Subscription } from "@shared/schema";
 
 export default function Dashboard() {
   const { toast } = useToast();
 
   const { data: apiKeys = [], isLoading: keysLoading } = useQuery<ApiKey[]>({
     queryKey: ["/api/keys"],
+  });
+
+  const { data: subscription } = useQuery<Subscription>({
+    queryKey: ["/api/subscription"],
+  });
+
+  const { data: usageStats } = useQuery<{
+    totalRequests: number;
+    requestsByService: Record<string, number>;
+  }>({
+    queryKey: ["/api/usage/stats"],
+    refetchInterval: 30000, // Refetch every 30 seconds
   });
 
   const deleteKeyMutation = useMutation({
@@ -89,27 +101,27 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <StatsCard
               title="Total API Calls"
-              value="24,847"
+              value={(usageStats?.totalRequests ?? 0).toLocaleString()}
               icon={Activity}
-              trend="+23% from last month"
-              trendUp={true}
+              trend="Last 30 days"
+              trendUp={false}
             />
             <StatsCard
               title="Active API Keys"
-              value="3"
+              value={apiKeys.length.toString()}
               icon={Key}
             />
             <StatsCard
-              title="Credits Remaining"
-              value="$87.50"
+              title="Current Plan"
+              value={subscription?.plan ? subscription.plan.charAt(0).toUpperCase() + subscription.plan.slice(1) : "Free"}
               icon={DollarSign}
             />
             <StatsCard
-              title="Avg Response Time"
-              value="89ms"
+              title="Plan Status"
+              value={subscription?.status ? subscription.status.charAt(0).toUpperCase() + subscription.status.slice(1) : "Active"}
               icon={Clock}
-              trend="-15% faster"
-              trendUp={true}
+              trend={subscription?.plan === 'pro' ? 'Pro Plan' : subscription?.plan === 'enterprise' ? 'Enterprise' : 'Free Plan'}
+              trendUp={false}
             />
           </div>
 
@@ -117,16 +129,43 @@ export default function Dashboard() {
             <Card className="lg:col-span-2">
               <CardHeader>
                 <CardTitle>Usage Overview</CardTitle>
-                <CardDescription>API calls over the last 30 days</CardDescription>
+                <CardDescription>API calls by service (last 30 days)</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="h-80 flex items-center justify-center border-2 border-dashed rounded-lg">
-                  <div className="text-center text-muted-foreground">
-                    <TrendingUp className="h-16 w-16 mx-auto mb-4 opacity-30" />
-                    <p className="font-medium">Usage Chart</p>
-                    <p className="text-sm">Real-time analytics visualization</p>
+                {usageStats && Object.keys(usageStats.requestsByService).length > 0 ? (
+                  <div className="space-y-4">
+                    {Object.entries(usageStats.requestsByService).map(([service, count]) => (
+                      <div key={service} className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-sm font-medium capitalize">
+                              {service.replace(/_/g, ' ')}
+                            </span>
+                            <span className="text-sm text-muted-foreground">
+                              {count.toLocaleString()} calls
+                            </span>
+                          </div>
+                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-primary rounded-full transition-all duration-300"
+                              style={{ 
+                                width: `${(count / usageStats.totalRequests) * 100}%` 
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
+                ) : (
+                  <div className="h-80 flex items-center justify-center border-2 border-dashed rounded-lg">
+                    <div className="text-center text-muted-foreground">
+                      <TrendingUp className="h-16 w-16 mx-auto mb-4 opacity-30" />
+                      <p className="font-medium">No API calls yet</p>
+                      <p className="text-sm">Start using your API keys to see usage data</p>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
 

@@ -288,6 +288,210 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Usage tracking and stats routes
+  app.get('/api/usage/logs', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const limit = parseInt(req.query.limit as string) || 100;
+      const logs = await storage.getUserUsageLogs(userId, limit);
+      res.json(logs);
+    } catch (error: any) {
+      console.error('Error fetching usage logs:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get('/api/usage/stats', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const days = parseInt(req.query.days as string) || 30;
+      const stats = await storage.getUserUsageStats(userId, days);
+      res.json(stats);
+    } catch (error: any) {
+      console.error('Error fetching usage stats:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Middleware for API key authentication
+  const authenticateApiKey = async (req: any, res: any, next: any) => {
+    const apiKey = req.headers['x-api-key'] || req.headers['authorization']?.replace('Bearer ', '');
+
+    if (!apiKey) {
+      return res.status(401).json({ error: 'API key required' });
+    }
+
+    try {
+      const key = await storage.getApiKey(apiKey as string);
+      if (!key) {
+        return res.status(401).json({ error: 'Invalid API key' });
+      }
+
+      // Get user's subscription to check limits
+      const subscription = await storage.getSubscription(key.userId);
+      const plan = subscription?.plan || 'free';
+      
+      // Check rate limits based on plan
+      const stats = await storage.getUserUsageStats(key.userId, 30);
+      const limits = {
+        free: Infinity, // Unlimited for testing
+        pro: 10000,
+        enterprise: Infinity,
+      };
+
+      if (stats.totalRequests >= limits[plan as keyof typeof limits]) {
+        return res.status(429).json({ 
+          error: 'Rate limit exceeded', 
+          limit: limits[plan as keyof typeof limits],
+          used: stats.totalRequests 
+        });
+      }
+
+      // Attach user info to request
+      req.apiUser = {
+        userId: key.userId,
+        apiKeyId: key.id,
+        plan,
+      };
+
+      // Update last used timestamp
+      await storage.updateApiKeyUsage(apiKey as string);
+
+      next();
+    } catch (error: any) {
+      console.error('Error authenticating API key:', error);
+      res.status(500).json({ error: 'Authentication failed' });
+    }
+  };
+
+  // Helper to log API usage
+  const logApiUsage = async (req: any, service: string, endpoint: string, statusCode: number, responseTime: number) => {
+    if (!req.apiUser) return;
+
+    try {
+      await storage.createUsageLog({
+        userId: req.apiUser.userId,
+        apiKeyId: req.apiUser.apiKeyId,
+        service,
+        endpoint,
+        method: req.method,
+        statusCode,
+        responseTime,
+        requestMetadata: {
+          plan: req.apiUser.plan,
+          ip: req.ip,
+          userAgent: req.headers['user-agent'],
+        },
+      });
+    } catch (error) {
+      console.error('Error logging API usage:', error);
+    }
+  };
+
+  // GPU Rental API
+  app.post('/api/v1/gpu/create', authenticateApiKey, async (req: any, res) => {
+    const startTime = Date.now();
+    try {
+      const { instance_type, duration_hours } = req.body;
+
+      if (!instance_type || !duration_hours) {
+        const responseTime = Date.now() - startTime;
+        await logApiUsage(req, 'gpu', '/api/v1/gpu/create', 400, responseTime);
+        return res.status(400).json({ error: 'instance_type and duration_hours are required' });
+      }
+
+      // Simulate GPU instance creation
+      const instance = {
+        id: `gpu_${Date.now()}`,
+        instance_type,
+        duration_hours,
+        status: 'active',
+        created_at: new Date().toISOString(),
+        expires_at: new Date(Date.now() + duration_hours * 60 * 60 * 1000).toISOString(),
+      };
+
+      const responseTime = Date.now() - startTime;
+      await logApiUsage(req, 'gpu', '/api/v1/gpu/create', 200, responseTime);
+
+      res.json(instance);
+    } catch (error: any) {
+      const responseTime = Date.now() - startTime;
+      await logApiUsage(req, 'gpu', '/api/v1/gpu/create', 500, responseTime);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Face Analysis API
+  app.post('/api/v1/face/analyze', authenticateApiKey, async (req: any, res) => {
+    const startTime = Date.now();
+    try {
+      const { image_url } = req.body;
+
+      if (!image_url) {
+        const responseTime = Date.now() - startTime;
+        await logApiUsage(req, 'face_analysis', '/api/v1/face/analyze', 400, responseTime);
+        return res.status(400).json({ error: 'image_url is required' });
+      }
+
+      // Simulate face analysis
+      const analysis = {
+        face_detected: true,
+        confidence: 0.98,
+        attributes: {
+          age: Math.floor(Math.random() * 50) + 20,
+          gender: Math.random() > 0.5 ? 'male' : 'female',
+          emotion: ['happy', 'neutral', 'sad', 'angry'][Math.floor(Math.random() * 4)],
+        },
+        processed_at: new Date().toISOString(),
+      };
+
+      const responseTime = Date.now() - startTime;
+      await logApiUsage(req, 'face_analysis', '/api/v1/face/analyze', 200, responseTime);
+
+      res.json(analysis);
+    } catch (error: any) {
+      const responseTime = Date.now() - startTime;
+      await logApiUsage(req, 'face_analysis', '/api/v1/face/analyze', 500, responseTime);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Identity Verification API
+  app.post('/api/v1/identity/verify', authenticateApiKey, async (req: any, res) => {
+    const startTime = Date.now();
+    try {
+      const { document_type, document_image_url } = req.body;
+
+      if (!document_type || !document_image_url) {
+        const responseTime = Date.now() - startTime;
+        await logApiUsage(req, 'identity_verification', '/api/v1/identity/verify', 400, responseTime);
+        return res.status(400).json({ error: 'document_type and document_image_url are required' });
+      }
+
+      // Simulate identity verification
+      const verification = {
+        verified: Math.random() > 0.3,
+        confidence: 0.95,
+        document_type,
+        extracted_data: {
+          name: 'John Doe',
+          document_number: 'ABC123456',
+          expiry_date: '2030-12-31',
+        },
+        verified_at: new Date().toISOString(),
+      };
+
+      const responseTime = Date.now() - startTime;
+      await logApiUsage(req, 'identity_verification', '/api/v1/identity/verify', 200, responseTime);
+
+      res.json(verification);
+    } catch (error: any) {
+      const responseTime = Date.now() - startTime;
+      await logApiUsage(req, 'identity_verification', '/api/v1/identity/verify', 500, responseTime);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
