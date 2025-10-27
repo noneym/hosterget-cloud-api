@@ -119,11 +119,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(400).send('No signature');
     }
 
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      console.error('STRIPE_WEBHOOK_SECRET is not set');
+      return res.status(500).send('Webhook secret not configured');
+    }
+
     let event: Stripe.Event;
 
     try {
-      // For webhook endpoint, we need raw body - this will be handled by express.raw() middleware
-      event = req.body as Stripe.Event;
+      // Verify the webhook signature using the raw body
+      const rawBody = (req as any).rawBody;
+      if (!rawBody) {
+        throw new Error('Raw body not available for signature verification');
+      }
+      
+      event = stripe.webhooks.constructEvent(
+        rawBody,
+        sig,
+        webhookSecret
+      );
     } catch (err: any) {
       console.error('Webhook signature verification failed:', err.message);
       return res.status(400).send(`Webhook Error: ${err.message}`);
