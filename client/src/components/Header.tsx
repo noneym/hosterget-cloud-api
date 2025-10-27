@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import { useState } from "react";
+import logoImage from '@assets/generated_images/HosterGet_company_logo_745cb216.png';
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -14,27 +15,27 @@ export function Header() {
         <Link href="/">
           <a className="flex items-center space-x-2 hover-elevate rounded-md px-2 py-1" data-testid="link-home">
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
-                <span className="text-lg font-bold text-primary-foreground">A</span>
-              </div>
-              <span className="text-xl font-bold">AI Cloud</span>
+              <img src={logoImage} alt="HosterGet" className="h-8 w-8 rounded-md" />
+              <span className="text-xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                HosterGet
+              </span>
             </div>
           </a>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
           <Link href="/services">
-            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2" data-testid="link-services">
+            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2 transition-colors" data-testid="link-services">
               Services
             </a>
           </Link>
           <Link href="/pricing">
-            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2" data-testid="link-pricing">
+            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2 transition-colors" data-testid="link-pricing">
               Pricing
             </a>
           </Link>
           <Link href="/docs">
-            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2" data-testid="link-docs">
+            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2 transition-colors" data-testid="link-docs">
               Documentation
             </a>
           </Link>
@@ -58,7 +59,9 @@ export function Header() {
             </Link>
             <Link href="/signup">
               <a data-testid="link-signup">
-                <Button variant="default">Sign Up</Button>
+                <Button variant="default" className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90">
+                  Sign Up
+                </Button>
               </a>
             </Link>
           </div>
@@ -100,7 +103,7 @@ export function Header() {
             </Link>
             <Link href="/signup">
               <a data-testid="link-mobile-signup">
-                <Button variant="default" className="w-full">Sign Up</Button>
+                <Button variant="default" className="w-full bg-gradient-to-r from-primary to-purple-600">Sign Up</Button>
               </a>
             </Link>
           </div>

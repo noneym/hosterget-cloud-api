@@ -4,7 +4,7 @@ import { StatsCard } from "@/components/StatsCard";
 import { ApiKeyCard } from "@/components/ApiKeyCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, Key, DollarSign, Clock, Plus } from "lucide-react";
+import { Activity, Key, DollarSign, Clock, Plus, TrendingUp, Zap } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Dashboard() {
@@ -27,16 +27,16 @@ export default function Dashboard() {
       <main className="flex-1 bg-muted/30">
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2" data-testid="text-dashboard-title">Dashboard</h1>
-            <p className="text-muted-foreground">Monitor your API usage and manage your account</p>
+            <h1 className="text-4xl font-bold mb-2" data-testid="text-dashboard-title">Dashboard</h1>
+            <p className="text-muted-foreground text-lg">Monitor your API usage and manage your account</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <StatsCard
               title="Total API Calls"
-              value="12,543"
+              value="24,847"
               icon={Activity}
-              trend="+12% from last month"
+              trend="+23% from last month"
               trendUp={true}
             />
             <StatsCard
@@ -46,27 +46,31 @@ export default function Dashboard() {
             />
             <StatsCard
               title="Credits Remaining"
-              value="$47.50"
+              value="$87.50"
               icon={DollarSign}
             />
             <StatsCard
               title="Avg Response Time"
-              value="124ms"
+              value="89ms"
               icon={Clock}
-              trend="-8% faster"
+              trend="-15% faster"
               trendUp={true}
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <Card>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <Card className="lg:col-span-2">
               <CardHeader>
                 <CardTitle>Usage Overview</CardTitle>
                 <CardDescription>API calls over the last 30 days</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="h-64 flex items-center justify-center text-muted-foreground">
-                  Chart placeholder - usage statistics will be displayed here
+                <div className="h-72 flex items-center justify-center border-2 border-dashed rounded-lg">
+                  <div className="text-center text-muted-foreground">
+                    <TrendingUp className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                    <p className="text-sm">Usage chart visualization</p>
+                    <p className="text-xs">Real-time analytics coming soon</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -76,7 +80,7 @@ export default function Dashboard() {
                 <CardTitle>Quick Actions</CardTitle>
                 <CardDescription>Common tasks and shortcuts</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-3">
                 <Button 
                   variant="outline" 
                   className="w-full justify-start" 
@@ -89,6 +93,7 @@ export default function Dashboard() {
                 <Link href="/docs">
                   <a className="block" data-testid="link-view-docs">
                     <Button variant="outline" className="w-full justify-start">
+                      <Zap className="mr-2 h-4 w-4" />
                       View Documentation
                     </Button>
                   </a>
@@ -96,7 +101,8 @@ export default function Dashboard() {
                 <Link href="/pricing">
                   <a className="block" data-testid="link-add-credits">
                     <Button variant="outline" className="w-full justify-start">
-                      Add Credits
+                      <DollarSign className="mr-2 h-4 w-4" />
+                      Purchase Credits
                     </Button>
                   </a>
                 </Link>
@@ -110,7 +116,7 @@ export default function Dashboard() {
                 <CardTitle>API Keys</CardTitle>
                 <CardDescription>Manage your API keys and access tokens</CardDescription>
               </div>
-              <Button onClick={handleCreateKey} data-testid="button-header-create-key">
+              <Button onClick={handleCreateKey} data-testid="button-header-create-key" className="bg-gradient-to-r from-primary to-purple-600">
                 <Plus className="mr-2 h-4 w-4" />
                 Create Key
               </Button>
@@ -118,8 +124,8 @@ export default function Dashboard() {
             <CardContent className="space-y-4">
               <ApiKeyCard
                 name="Production API Key"
-                keyPreview="sk_live_••••••••••••3x9z"
-                fullKey="sk_live_1234567890abcdef3x9z"
+                keyPreview="hg_live_••••••••••••3x9z"
+                fullKey="hg_live_1234567890abcdef3x9z"
                 createdAt="Jan 15, 2024"
                 lastUsed="2 hours ago"
                 onCopy={handleCopyKey}
@@ -127,8 +133,8 @@ export default function Dashboard() {
               />
               <ApiKeyCard
                 name="Development Key"
-                keyPreview="sk_test_••••••••••••7k2m"
-                fullKey="sk_test_abcdefghijklmnop7k2m"
+                keyPreview="hg_test_••••••••••••7k2m"
+                fullKey="hg_test_abcdefghijklmnop7k2m"
                 createdAt="Dec 1, 2023"
                 lastUsed="1 day ago"
                 onCopy={handleCopyKey}
@@ -136,8 +142,8 @@ export default function Dashboard() {
               />
               <ApiKeyCard
                 name="Staging Environment"
-                keyPreview="sk_stag_••••••••••••9p4x"
-                fullKey="sk_stag_zyxwvutsrqponmlk9p4x"
+                keyPreview="hg_stag_••••••••••••9p4x"
+                fullKey="hg_stag_zyxwvutsrqponmlk9p4x"
                 createdAt="Nov 10, 2023"
                 lastUsed="Never"
                 onCopy={handleCopyKey}

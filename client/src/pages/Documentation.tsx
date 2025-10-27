@@ -10,7 +10,7 @@ export default function Documentation() {
   const authExamples = [
     {
       language: 'JavaScript',
-      code: `const response = await fetch('https://api.aicloud.com/v1/endpoint', {
+      code: `const response = await fetch('https://api.hosterget.com/v1/endpoint', {
   method: 'GET',
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY',
@@ -31,7 +31,7 @@ headers = {
 }
 
 response = requests.get(
-    'https://api.aicloud.com/v1/endpoint',
+    'https://api.hosterget.com/v1/endpoint',
     headers=headers
 )
 
@@ -40,7 +40,7 @@ print(data)`
     },
     {
       language: 'cURL',
-      code: `curl -X GET https://api.aicloud.com/v1/endpoint \\
+      code: `curl -X GET https://api.hosterget.com/v1/endpoint \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json"`
     }
@@ -49,7 +49,7 @@ print(data)`
   const gpuExamples = [
     {
       language: 'JavaScript',
-      code: `const response = await fetch('https://api.aicloud.com/v1/gpu/process', {
+      code: `const response = await fetch('https://api.hosterget.com/v1/gpu/process', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY',
@@ -82,7 +82,7 @@ payload = {
 }
 
 response = requests.post(
-    'https://api.aicloud.com/v1/gpu/process',
+    'https://api.hosterget.com/v1/gpu/process',
     headers={'Authorization': 'Bearer YOUR_API_KEY'},
     json=payload
 )
@@ -98,7 +98,7 @@ print(result['image_url'])`
       code: `const formData = new FormData();
 formData.append('image', imageFile);
 
-const response = await fetch('https://api.aicloud.com/v1/face/analyze', {
+const response = await fetch('https://api.hosterget.com/v1/face/analyze', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY'
@@ -117,7 +117,7 @@ files = {'image': open('photo.jpg', 'rb')}
 headers = {'Authorization': 'Bearer YOUR_API_KEY'}
 
 response = requests.post(
-    'https://api.aicloud.com/v1/face/analyze',
+    'https://api.hosterget.com/v1/face/analyze',
     headers=headers,
     files=files
 )
@@ -132,16 +132,19 @@ print(analysis)`
       <Header />
       
       <main className="flex-1">
-        <div className="container mx-auto px-4 py-16">
-          <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-docs-title">API Documentation</h1>
-            <p className="text-muted-foreground text-lg">
-              Complete guide to integrating AI Cloud APIs into your applications
+        <div className="container mx-auto px-4 py-20">
+          <div className="mb-16">
+            <Badge variant="outline" className="mb-4">Documentation</Badge>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6" data-testid="text-docs-title">
+              API Documentation
+            </h1>
+            <p className="text-muted-foreground text-xl max-w-3xl">
+              Complete guide to integrating HosterGet APIs into your applications. Get started in minutes.
             </p>
           </div>
 
           <Tabs defaultValue="authentication" className="space-y-8">
-            <TabsList>
+            <TabsList className="bg-muted">
               <TabsTrigger value="authentication" data-testid="tab-authentication">Authentication</TabsTrigger>
               <TabsTrigger value="gpu" data-testid="tab-gpu">GPU Services</TabsTrigger>
               <TabsTrigger value="face" data-testid="tab-face">Face Analyzer</TabsTrigger>
@@ -255,7 +258,7 @@ print(analysis)`
                     <pre className="bg-muted p-4 rounded overflow-x-auto text-sm">
 {`{
   "status": "success",
-  "image_url": "https://cdn.aicloud.com/output/abc123.png",
+  "image_url": "https://cdn.hosterget.com/output/abc123.png",
   "processing_time": 2.34,
   "credits_used": 0.05
 }`}
