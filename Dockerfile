@@ -7,11 +7,10 @@ WORKDIR /app
 
 # Accept build arguments (these are passed from docker build command)
 ARG VITE_STRIPE_PUBLIC_KEY
-ARG NODE_ENV=production
 
 # Set environment variables for build process
 ENV VITE_STRIPE_PUBLIC_KEY=$VITE_STRIPE_PUBLIC_KEY
-ENV NODE_ENV=$NODE_ENV
+# DO NOT set NODE_ENV=production here - we need devDependencies (vite) for building!
 
 # Copy package files
 COPY package*.json ./
@@ -24,8 +23,9 @@ COPY . .
 
 # Build frontend (Vite) and backend (esbuild)
 # This creates dist/public/ for frontend and dist/index.js for backend
+# Set NODE_ENV=production only during build (not during npm ci)
 # Mark vite and nanoid as external to avoid bundling them into dist/index.js
-RUN npx vite build && \
+RUN NODE_ENV=production npx vite build && \
     npx esbuild server/index.ts \
     --platform=node \
     --packages=external \
