@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun, Menu, X, ChevronDown } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import { useState } from "react";
-import { Logo } from "./Logo";
+import logoIcon from '@assets/generated_images/Blue_cloud_hosting_logo_transparent_6f6c4e19.png';
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -14,7 +14,7 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
         <Link href="/">
           <a className="flex items-center gap-2.5 hover-elevate rounded-md px-2 py-1.5 -ml-2" data-testid="link-home">
-            <Logo className="h-9 w-9" />
+            <img src={logoIcon} alt="HosterGet Logo" className="h-9 w-9 object-contain" />
             <span className="text-xl font-bold tracking-tight">
               HosterGet
             </span>
