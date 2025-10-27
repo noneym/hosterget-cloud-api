@@ -24,7 +24,16 @@ COPY . .
 
 # Build frontend (Vite) and backend (esbuild)
 # This creates dist/public/ for frontend and dist/index.js for backend
-RUN npm run build
+# Mark vite and nanoid as external to avoid bundling them into dist/index.js
+RUN npm run vite build && \
+    npx esbuild server/index.ts \
+    --platform=node \
+    --packages=external \
+    --external:vite \
+    --external:nanoid \
+    --bundle \
+    --format=esm \
+    --outdir=dist
 
 # Stage 2: Production image
 FROM node:20-alpine AS production
@@ -45,9 +54,11 @@ ENV PORT=5000
 # - STRIPE_WEBHOOK_SECRET
 # - VITE_STRIPE_PUBLIC_KEY (for frontend)
 
-# Install production dependencies only
+# Install production dependencies + vite (needed by server/vite.ts imports)
 COPY package*.json ./
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production && \
+    npm install vite nanoid && \
+    npm cache clean --force
 
 # Copy built artifacts from builder stage
 COPY --from=builder /app/dist ./dist
