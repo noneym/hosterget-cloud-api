@@ -94,9 +94,14 @@ TESTING_VITE_STRIPE_PUBLIC_KEY=pk_test_your_test_key
 ### Deployment
 ```bash
 PORT=5000  # Default port, auto-set by hosting provider
-REPL_ID=your-repl-id  # Replit environment identifier
-REPLIT_DOMAINS=your-domain.replit.app  # For OIDC redirect URLs
 NODE_ENV=production  # Set to 'production' for deployment
+
+# Replit-specific (Only needed when deploying ON Replit platform)
+# These are automatically set by Replit - no need to configure manually
+REPL_ID=your-repl-id  # Auto-set by Replit (find with: echo $REPL_ID)
+REPLIT_DOMAINS=your-domain.replit.app  # Auto-set by Replit (find with: echo $REPLIT_DOMAINS)
+
+# Note: If deploying with Docker outside of Replit, you can omit REPL_ID and REPLIT_DOMAINS
 ```
 
 ## 📦 Installation
