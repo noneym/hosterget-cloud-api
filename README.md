@@ -140,11 +140,13 @@ The application will be available at `http://localhost:5000`
 ```bash
 docker build \
   --build-arg VITE_STRIPE_PUBLIC_KEY=pk_live_your_key \
-  --build-arg NODE_ENV=production \
   -t hosterget-cloud-api .
 ```
 
-**Important:** The `VITE_STRIPE_PUBLIC_KEY` must be provided during build time because Vite bundles it into the frontend code.
+**Important:** 
+- The `VITE_STRIPE_PUBLIC_KEY` must be provided during **build time** because Vite bundles it into the frontend code
+- **Never pass secrets** (DATABASE_URL, SESSION_SECRET, STRIPE_SECRET_KEY) as build arguments
+- Runtime secrets should be passed via `-e` flags or `--env-file` when running the container
 
 **2. Run the container:**
 ```bash

@@ -55,5 +55,6 @@ logs
 # Server public (generated during build)
 server/public
 
-# Attached assets (large media files - mount these as volume if needed)
-attached_assets
+# Attached assets - INCLUDED in build because they're referenced in the app
+# If you want to exclude them, remove imports from Home.tsx first
+# attached_assets

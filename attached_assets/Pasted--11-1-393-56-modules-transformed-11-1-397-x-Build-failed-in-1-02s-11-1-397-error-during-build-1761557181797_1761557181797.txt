@@ -1,0 +1,48 @@
+#11 1.393 ✓ 56 modules transformed.
+#11 1.397 x Build failed in 1.02s
+#11 1.397 error during build:
+#11 1.397 [vite:asset] Could not load /app/attached_assets/1027_1761553215847.mp4 (imported by client/src/pages/Home.tsx): ENOENT: no such file or directory, open '/app/attached_assets/1027_1761553215847.mp4'
+#11 1.397     at async open (node:internal/fs/promises:639:25)
+#11 1.397     at async Object.readFile (node:internal/fs/promises:1246:14)
+#11 1.397     at async fileToBuiltUrl (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20428:19)
+#11 1.397     at async Object.load (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20328:17)
+#11 1.397     at async PluginDriver.hookFirstAndGetPlugin (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20689:28)
+#11 1.397     at async file:///app/node_modules/rollup/dist/es/shared/node-entry.js:19809:33
+#11 1.397     at async Queue.work (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20899:32)
+#11 ERROR: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+------
+ > [builder 6/6] RUN npm run build:
+1.397 x Build failed in 1.02s
+1.397 error during build:
+1.397 [vite:asset] Could not load /app/attached_assets/1027_1761553215847.mp4 (imported by client/src/pages/Home.tsx): ENOENT: no such file or directory, open '/app/attached_assets/1027_1761553215847.mp4'
+1.397     at async open (node:internal/fs/promises:639:25)
+1.397     at async Object.readFile (node:internal/fs/promises:1246:14)
+1.397     at async fileToBuiltUrl (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20428:19)
+1.397     at async Object.load (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20328:17)
+1.397     at async PluginDriver.hookFirstAndGetPlugin (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20689:28)
+1.397     at async file:///app/node_modules/rollup/dist/es/shared/node-entry.js:19809:33
+1.397     at async Queue.work (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20899:32)
+------
+
+ 6 warnings found (use docker --debug to expand):
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "STRIPE_SECRET_KEY") (line 47)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "STRIPE_WEBHOOK_SECRET") (line 48)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "SESSION_SECRET") (line 37)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "STRIPE_SECRET_KEY") (line 38)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "STRIPE_WEBHOOK_SECRET") (line 39)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "SESSION_SECRET") (line 46)
+Dockerfile:27
+--------------------
+  25 |     # Build frontend (Vite) and backend (esbuild)
+  26 |     # This creates dist/public/ for frontend and dist/index.js for backend
+  27 | >>> RUN npm run build
+  28 |     
+  29 |     # Stage 2: Production image
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+##########################################
+### Error
+### Mon, 27 Oct 2025 09:25:36 GMT
+##########################################
+
+Command failed with exit code 1: docker buildx build --network host -f /etc/easypanel/projects/hosterget-replit/replit-web/code/Dockerfile -t easypanel/hosterget-replit/replit-web --label 'keep=true' --build-arg 'DATABASE_URL=postgres://postgres:2a11d478c8d8a85f09a5@138.199.140.167:55432/hosterget-replit?sslmode=disable' --build-arg 'PGHOST=138.199.140.167' --build-arg 'PGPORT=55432' --build-arg 'PGUSER=postgres' --build-arg 'PGPASSWORD=2a11d478c8d8a85f09a5' --build-arg 'PGDATABASE=hosterget-replit' --build-arg 'SESSION_SECRET=your-session-secret-key-min-32-chars' --build-arg 'ISSUER_URL=https://replit.com/oidc' --build-arg 'STRIPE_SECRET_KEY=sk_live_your_stripe_secret_key' --build-arg 'VITE_STRIPE_PUBLIC_KEY=pk_live_your_stripe_public_key' --build-arg 'STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret' --build-arg 'TESTING_STRIPE_SECRET_KEY=sk_test_your_test_key' --build-arg 'TESTING_VITE_STRIPE_PUBLIC_KEY=pk_test_your_test_key' --build-arg 'PORT=5000' --build-arg 'NODE_ENV=development' --build-arg 'REPL_ID=33358431-62eb-4619-a9f7-ed4c4d666b78' --build-arg 'REPLIT_DOMAINS=33358431-62eb-4619-a9f7-ed4c4d666b78-00-sc2hd8pves9i.kirk.replit.dev' --build-arg 'GIT_SHA=fca512835dc6678a3984c80553451b5b76304392' /etc/easypanel/projects/hosterget-replit/replit-web/code/

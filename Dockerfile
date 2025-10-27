@@ -32,23 +32,18 @@ FROM node:20-alpine AS production
 # Set working directory
 WORKDIR /app
 
-# Accept runtime environment arguments
-ARG DATABASE_URL
-ARG SESSION_SECRET
-ARG STRIPE_SECRET_KEY
-ARG STRIPE_WEBHOOK_SECRET
-ARG VITE_STRIPE_PUBLIC_KEY
-ARG PORT=5000
-ARG NODE_ENV=production
+# Set default production environment
+ENV NODE_ENV=production
+ENV PORT=5000
 
-# Set runtime environment variables
-ENV DATABASE_URL=$DATABASE_URL
-ENV SESSION_SECRET=$SESSION_SECRET
-ENV STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY
-ENV STRIPE_WEBHOOK_SECRET=$STRIPE_WEBHOOK_SECRET
-ENV VITE_STRIPE_PUBLIC_KEY=$VITE_STRIPE_PUBLIC_KEY
-ENV PORT=$PORT
-ENV NODE_ENV=$NODE_ENV
+# Runtime secrets should be passed via docker run -e or --env-file
+# NOT as build arguments for security reasons
+# The following will be available at runtime:
+# - DATABASE_URL
+# - SESSION_SECRET
+# - STRIPE_SECRET_KEY
+# - STRIPE_WEBHOOK_SECRET
+# - VITE_STRIPE_PUBLIC_KEY (for frontend)
 
 # Install production dependencies only
 COPY package*.json ./
