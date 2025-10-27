@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun, Menu, X, ChevronDown } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import { useState } from "react";
-import logoImage from '@assets/generated_images/HosterGet_logo_with_text_e1cf9c68.png';
+import logoIcon from '@assets/generated_images/HosterGet_icon_logo_minimal_4e8f0b33.png';
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -13,11 +13,13 @@ export function Header() {
     <header className="w-full border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
         <Link href="/">
-          <a className="flex items-center gap-2 hover-elevate rounded-md px-2 py-1 -ml-2" data-testid="link-home">
-            <div className="h-9 w-9 rounded bg-primary flex items-center justify-center font-bold text-white text-lg">
-              H
+          <a className="flex items-center gap-3 hover-elevate rounded-md px-2 py-1 -ml-2" data-testid="link-home">
+            <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center p-1.5">
+              <img src={logoIcon} alt="HosterGet" className="w-full h-full object-contain" />
             </div>
-            <span className="text-xl font-bold">HosterGet</span>
+            <span className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent tracking-tight">
+              HosterGet
+            </span>
           </a>
         </Link>
 

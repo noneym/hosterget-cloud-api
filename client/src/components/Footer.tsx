@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import logoImage from '@assets/generated_images/HosterGet_logo_with_text_e1cf9c68.png';
+import logoIcon from '@assets/generated_images/HosterGet_icon_logo_minimal_4e8f0b33.png';
 
 export function Footer() {
   return (
@@ -7,11 +7,13 @@ export function Footer() {
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-9 w-9 rounded bg-primary flex items-center justify-center font-bold text-white text-lg">
-                H
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center p-1.5">
+                <img src={logoIcon} alt="HosterGet" className="w-full h-full object-contain" />
               </div>
-              <span className="text-xl font-bold">HosterGet</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent tracking-tight">
+                HosterGet
+              </span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Enterprise-grade cloud APIs trusted by 10,000+ developers worldwide.
