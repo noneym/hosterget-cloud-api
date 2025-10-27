@@ -12,16 +12,14 @@ export function Header() {
   return (
     <header className="w-full border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
-        <div className="flex items-center gap-3">
-          <Link href="/">
-            <a className="flex items-center gap-3 hover-elevate rounded-md px-2 py-1 -ml-2" data-testid="link-home">
-              <Logo className="h-10 w-10" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent tracking-tight">
-                HosterGet
-              </span>
-            </a>
-          </Link>
-        </div>
+        <Link href="/">
+          <a className="flex items-center gap-2.5 hover-elevate rounded-md px-2 py-1.5 -ml-2" data-testid="link-home">
+            <Logo className="h-9 w-9" />
+            <span className="text-xl font-bold tracking-tight">
+              HosterGet
+            </span>
+          </a>
+        </Link>
 
         <nav className="hidden lg:flex items-center gap-1">
           <Link href="/services">

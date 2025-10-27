@@ -7,9 +7,9 @@ export function Footer() {
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <Logo className="h-10 w-10" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent tracking-tight">
+            <div className="flex items-center gap-2.5 mb-4">
+              <Logo className="h-9 w-9" />
+              <span className="text-xl font-bold tracking-tight">
                 HosterGet
               </span>
             </div>
