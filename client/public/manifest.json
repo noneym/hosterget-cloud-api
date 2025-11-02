@@ -1,0 +1,22 @@
+{
+  "name": "HosterGet - Premium Cloud API Services",
+  "short_name": "HosterGet",
+  "description": "Enterprise-grade cloud APIs for GPU acceleration, face analysis, and identity verification",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
