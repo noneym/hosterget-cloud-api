@@ -303,8 +303,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const dbSubscription = await storage.getSubscriptionByStripeId(subscription.id);
 
           if (dbSubscription) {
+            // Downgrade to active free plan when subscription is canceled
             await storage.updateSubscriptionByStripeId(subscription.id, {
-              status: 'canceled',
+              plan: 'free',
+              status: 'active',
+              stripeSubscriptionId: null,
             });
           }
           break;
