@@ -34,7 +34,7 @@ export default function Services() {
                 status="Live"
                 metric="Sub-second response"
                 tags={['GPU', 'AI', 'ML']}
-                href="/docs/gpu"
+                href="/docs"
               />
               <ServiceCard
                 icon={Scan}
@@ -43,7 +43,7 @@ export default function Services() {
                 status="Beta"
                 metric="95%+ accuracy"
                 tags={['Computer Vision', 'AI']}
-                href="/docs/face-analyzer"
+                href="/docs"
               />
               <ServiceCard
                 icon={Shield}
@@ -52,7 +52,7 @@ export default function Services() {
                 status="Live"
                 metric="1K free/day"
                 tags={['Security', 'Free']}
-                href="/docs/identity"
+                href="/docs"
               />
               <ServiceCard
                 icon={Database}
@@ -61,7 +61,7 @@ export default function Services() {
                 status="Live"
                 metric="15K req/30min"
                 tags={['Storage', 'Real-time']}
-                href="/docs/storage"
+                href="/docs"
               />
               <ServiceCard
                 icon={Fingerprint}
@@ -70,7 +70,7 @@ export default function Services() {
                 status="Beta"
                 metric="<100ms response"
                 tags={['AI', 'Validation']}
-                href="/docs/username"
+                href="/docs"
               />
               <ServiceCard
                 icon={Cloud}
@@ -78,7 +78,7 @@ export default function Services() {
                 description="Quickly check if cloud storage links are valid and accessible with comprehensive metadata and security analysis."
                 status="Free Tool"
                 tags={['Validation', 'Tools']}
-                href="/docs/validator"
+                href="/docs"
               />
             </div>
           </div>
