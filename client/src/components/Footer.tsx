@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <Logo className="h-9 w-9" />
+              <Logo className="h-8 w-auto" />
               <span className="text-xl font-bold tracking-tight">
                 HosterGet
               </span>

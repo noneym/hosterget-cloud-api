@@ -27,7 +27,7 @@ export function Header() {
     <header className="w-full border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2.5 hover-elevate rounded-md px-2 py-1.5 -ml-2" data-testid="link-home">
-          <Logo className="h-9 w-9" />
+          <Logo className="h-8 w-auto" />
           <span className="text-xl font-bold tracking-tight">
             HosterGet
           </span>
