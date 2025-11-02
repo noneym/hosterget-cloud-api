@@ -1,14 +1,10 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import ws from "ws";
+import { Pool } from 'pg';
+import { drizzle } from 'drizzle-orm/node-postgres';
 import * as schema from "@shared/schema";
 
 // Disable TLS certificate validation for development (allows self-signed certs)
 // WARNING: Only use in development/testing environments
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
-// Configure Neon WebSocket with custom ws library
-neonConfig.webSocketConstructor = ws;
 
 if (!process.env.DATABASE_URL) {
   throw new Error(
@@ -16,6 +12,10 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-// Create pool for database connection
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle({ client: pool, schema });
+// Create standard PostgreSQL connection pool
+const pool = new Pool({ 
+  connectionString: process.env.DATABASE_URL,
+  ssl: false // Disable SSL since we're using self-signed certs
+});
+
+export const db = drizzle(pool, { schema });
