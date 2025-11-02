@@ -1,24 +1,43 @@
 export function Logo({ className = "h-12 w-12" }: { className?: string }) {
   return (
-    <svg 
-      viewBox="0 0 100 100" 
-      fill="none" 
+    <svg
+      viewBox="0 0 100 100"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      {/* Cloud shape with server lines */}
-      <path 
-        d="M70 35C70 28.3726 64.6274 23 58 23C55.6 23 53.4 23.8 51.6 25.2C49 19.4 43.2 15 36.5 15C27.4 15 20 22.4 20 31.5C20 32.2 20.1 32.9 20.2 33.6C14.9 35.4 11 40.3 11 46C11 53.1797 16.8203 59 24 59H66C74.2843 59 81 52.2843 81 44C81 36.8203 75.7797 30.6 69 29.2C69 29.1 70 28.3726 70 35Z" 
-        className="fill-primary"
-      />
-      {/* Server lines inside cloud */}
-      <line x1="35" y1="35" x2="57" y2="35" className="stroke-background" strokeWidth="3" strokeLinecap="round"/>
-      <line x1="35" y1="43" x2="57" y2="43" className="stroke-background" strokeWidth="3" strokeLinecap="round"/>
-      <line x1="35" y1="51" x2="57" y2="51" className="stroke-background" strokeWidth="3" strokeLinecap="round"/>
-      {/* Small dots for server indicators */}
-      <circle cx="30" cy="35" r="2" className="fill-background"/>
-      <circle cx="30" cy="43" r="2" className="fill-background"/>
-      <circle cx="30" cy="51" r="2" className="fill-background"/>
+      <defs>
+        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: '#667eea', stopOpacity: 1 }} />
+          <stop offset="50%" style={{ stopColor: '#764ba2', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#4facfe', stopOpacity: 1 }} />
+        </linearGradient>
+      </defs>
+
+      {/* Background circle for better visibility */}
+      <circle cx="50" cy="50" r="45" fill="url(#logoGradient)" opacity="0.15" />
+
+      {/* Stylized "H" letter with cloud/server concept */}
+      <g transform="translate(50, 50)">
+        {/* Left vertical bar */}
+        <rect x="-25" y="-28" width="10" height="56" rx="3" fill="url(#logoGradient)" opacity="0.95"/>
+
+        {/* Right vertical bar */}
+        <rect x="15" y="-28" width="10" height="56" rx="3" fill="url(#logoGradient)" opacity="0.95"/>
+
+        {/* Horizontal connection with cloud shape */}
+        <path d="M -15 -3 L -8 -3 Q -5 -8 0 -8 Q 5 -8 8 -3 L 15 -3 L 15 3 L 8 3 Q 5 8 0 8 Q -5 8 -8 3 L -15 3 Z"
+              fill="url(#logoGradient)" opacity="0.95"/>
+
+        {/* Small dots for server/data indication */}
+        <circle cx="-20" cy="-15" r="2" fill="url(#logoGradient)" opacity="0.7"/>
+        <circle cx="-20" cy="0" r="2" fill="url(#logoGradient)" opacity="0.7"/>
+        <circle cx="-20" cy="15" r="2" fill="url(#logoGradient)" opacity="0.7"/>
+
+        <circle cx="20" cy="-15" r="2" fill="url(#logoGradient)" opacity="0.7"/>
+        <circle cx="20" cy="0" r="2" fill="url(#logoGradient)" opacity="0.7"/>
+        <circle cx="20" cy="15" r="2" fill="url(#logoGradient)" opacity="0.7"/>
+      </g>
     </svg>
   );
 }
