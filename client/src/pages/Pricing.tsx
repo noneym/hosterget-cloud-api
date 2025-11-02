@@ -21,7 +21,7 @@ export default function Pricing() {
     // Free plan - just redirect to dashboard
     if (plan === 'Free') {
       if (!isAuthenticated) {
-        window.location.href = '/api/login';
+        setLocation('/login');
         return;
       }
       setLocation('/dashboard');
@@ -42,7 +42,7 @@ export default function Pricing() {
       if (!isAuthenticated) {
         // Save intended plan and redirect to login
         sessionStorage.setItem('intendedPlan', 'pro');
-        window.location.href = '/api/login';
+        setLocation('/login');
         return;
       }
 
