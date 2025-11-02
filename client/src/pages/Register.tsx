@@ -74,7 +74,8 @@ export default function Register() {
           title: "Account created successfully",
           description: "Welcome to HosterGet!",
         });
-        setLocation("/dashboard");
+        // Use full page reload to ensure auth state is properly loaded
+        window.location.href = "/dashboard";
       } else {
         toast({
           title: "Registration failed",

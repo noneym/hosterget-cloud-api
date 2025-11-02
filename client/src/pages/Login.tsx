@@ -36,7 +36,8 @@ export default function Login() {
           title: "Login successful",
           description: "Welcome back!",
         });
-        setLocation("/dashboard");
+        // Use full page reload to ensure auth state is properly loaded
+        window.location.href = "/dashboard";
       } else {
         toast({
           title: "Login failed",
