@@ -157,10 +157,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: 'User not found' });
       }
 
-      // Check if user already has an active subscription
+      // Check if user already has an active PAID subscription
       const existingSubscription = await storage.getSubscription(userId);
-      if (existingSubscription?.status === 'active') {
-        return res.status(400).json({ error: 'User already has an active subscription' });
+      if (existingSubscription?.status === 'active' && existingSubscription.plan !== 'free') {
+        return res.status(400).json({ error: 'You already have an active paid subscription. Please cancel your current subscription first.' });
       }
 
       // Create or retrieve Stripe customer

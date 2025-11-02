@@ -12,6 +12,9 @@ import Dashboard from "@/pages/Dashboard";
 import Docs from "@/pages/Docs";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import Privacy from "@/pages/Privacy";
+import Terms from "@/pages/Terms";
+import Refund from "@/pages/Refund";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -40,6 +43,9 @@ function Router() {
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
           <Route path="/docs" component={Docs} />
+          <Route path="/privacy" component={Privacy} />
+          <Route path="/terms" component={Terms} />
+          <Route path="/refund" component={Refund} />
         </>
       ) : (
         <>
@@ -51,6 +57,9 @@ function Router() {
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
           <Route path="/docs" component={Docs} />
+          <Route path="/privacy" component={Privacy} />
+          <Route path="/terms" component={Terms} />
+          <Route path="/refund" component={Refund} />
         </>
       )}
       <Route component={NotFound} />
