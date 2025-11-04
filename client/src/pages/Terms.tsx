@@ -17,8 +17,18 @@ export default function Terms() {
               </p>
               
               <p className="mb-4">
-                Please read these Terms of Service ("Terms") carefully before using the HosterGet API platform ("Service") operated by HosterGet ("us", "we", or "our").
+                Please read these Terms of Service ("Terms") carefully before using the HosterGet API platform ("Service") operated by Purpery, LLC ("HosterGet", "us", "we", or "our").
               </p>
+              
+              <div className="bg-muted/50 rounded-lg p-6 mb-6">
+                <h3 className="font-semibold mb-3">Company Information</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  <strong>Purpery, LLC</strong><br />
+                  1111B S Governors Ave STE 34861<br />
+                  Dover, DE 19904, USA<br />
+                  EIN: 61-2270068
+                </p>
+              </div>
             </section>
 
             <section>
@@ -166,18 +176,26 @@ export default function Terms() {
               <p className="mb-4">
                 For questions about these Terms, please contact us at:
               </p>
-              <p className="mb-2">
-                Email:{" "}
-                <a href="mailto:legal@hosterget.com" className="text-primary hover:underline">
-                  legal@hosterget.com
-                </a>
-              </p>
-              <p>
-                Support:{" "}
-                <a href="mailto:support@hosterget.com" className="text-primary hover:underline">
-                  support@hosterget.com
-                </a>
-              </p>
+              <div className="bg-muted/50 rounded-lg p-6">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  <strong className="text-foreground">Purpery, LLC</strong><br />
+                  1111B S Governors Ave STE 34861<br />
+                  Dover, DE 19904, USA<br />
+                  EIN: 61-2270068
+                </p>
+                <p className="text-sm mb-2">
+                  Legal:{" "}
+                  <a href="mailto:legal@hosterget.com" className="text-primary hover:underline">
+                    legal@hosterget.com
+                  </a>
+                </p>
+                <p className="text-sm">
+                  Support:{" "}
+                  <a href="mailto:support@hosterget.com" className="text-primary hover:underline">
+                    support@hosterget.com
+                  </a>
+                </p>
+              </div>
             </section>
           </div>
         </div>

@@ -85,7 +85,7 @@ export function Footer() {
               <p className="leading-relaxed">
                 1111B S Governors Ave STE 34861<br />
                 Dover, DE 19904, USA<br />
-                EIN: Pending
+                EIN: 61-2270068
               </p>
             </div>
             <div>

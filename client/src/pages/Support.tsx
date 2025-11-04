@@ -187,7 +187,7 @@ export default function Support() {
                         Dover, DE 19904, USA
                       </p>
                       <p className="text-sm text-muted-foreground mt-2">
-                        EIN: Pending
+                        EIN: 61-2270068
                       </p>
                     </div>
                   </div>

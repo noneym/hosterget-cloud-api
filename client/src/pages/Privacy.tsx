@@ -17,8 +17,18 @@ export default function Privacy() {
               </p>
               
               <p className="mb-4">
-                HosterGet ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our cloud API services.
+                Purpery, LLC ("HosterGet", "we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our cloud API services.
               </p>
+              
+              <div className="bg-muted/50 rounded-lg p-6 mb-6">
+                <h3 className="font-semibold mb-3">Company Information</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  <strong>Purpery, LLC</strong><br />
+                  1111B S Governors Ave STE 34861<br />
+                  Dover, DE 19904, USA<br />
+                  EIN: 61-2270068
+                </p>
+              </div>
             </section>
 
             <section>
@@ -137,18 +147,26 @@ export default function Privacy() {
               <p className="mb-4">
                 If you have questions about this Privacy Policy, please contact us at:
               </p>
-              <p className="mb-2">
-                Email:{" "}
-                <a href="mailto:privacy@hosterget.com" className="text-primary hover:underline">
-                  privacy@hosterget.com
-                </a>
-              </p>
-              <p>
-                Support:{" "}
-                <a href="mailto:support@hosterget.com" className="text-primary hover:underline">
-                  support@hosterget.com
-                </a>
-              </p>
+              <div className="bg-muted/50 rounded-lg p-6">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  <strong className="text-foreground">Purpery, LLC</strong><br />
+                  1111B S Governors Ave STE 34861<br />
+                  Dover, DE 19904, USA<br />
+                  EIN: 61-2270068
+                </p>
+                <p className="text-sm mb-2">
+                  Privacy:{" "}
+                  <a href="mailto:privacy@hosterget.com" className="text-primary hover:underline">
+                    privacy@hosterget.com
+                  </a>
+                </p>
+                <p className="text-sm">
+                  Support:{" "}
+                  <a href="mailto:support@hosterget.com" className="text-primary hover:underline">
+                    support@hosterget.com
+                  </a>
+                </p>
+              </div>
             </section>
           </div>
         </div>

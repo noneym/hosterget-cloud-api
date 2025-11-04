@@ -17,8 +17,18 @@ export default function Refund() {
               </p>
               
               <p className="mb-4">
-                At HosterGet, we want you to be completely satisfied with our service. This Refund Policy outlines the circumstances under which refunds may be issued.
+                At Purpery, LLC (doing business as HosterGet), we want you to be completely satisfied with our service. This Refund Policy outlines the circumstances under which refunds may be issued.
               </p>
+              
+              <div className="bg-muted/50 rounded-lg p-6 mb-6">
+                <h3 className="font-semibold mb-3">Company Information</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  <strong>Purpery, LLC</strong><br />
+                  1111B S Governors Ave STE 34861<br />
+                  Dover, DE 19904, USA<br />
+                  EIN: 61-2270068
+                </p>
+              </div>
             </section>
 
             <section>
@@ -143,18 +153,26 @@ export default function Refund() {
               <p className="mb-4">
                 If you have questions about our Refund Policy, please contact us:
               </p>
-              <p className="mb-2">
-                Billing Email:{" "}
-                <a href="mailto:billing@hosterget.com" className="text-primary hover:underline">
-                  billing@hosterget.com
-                </a>
-              </p>
-              <p>
-                General Support:{" "}
-                <a href="mailto:support@hosterget.com" className="text-primary hover:underline">
-                  support@hosterget.com
-                </a>
-              </p>
+              <div className="bg-muted/50 rounded-lg p-6">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  <strong className="text-foreground">Purpery, LLC</strong><br />
+                  1111B S Governors Ave STE 34861<br />
+                  Dover, DE 19904, USA<br />
+                  EIN: 61-2270068
+                </p>
+                <p className="text-sm mb-2">
+                  Billing:{" "}
+                  <a href="mailto:billing@hosterget.com" className="text-primary hover:underline">
+                    billing@hosterget.com
+                  </a>
+                </p>
+                <p className="text-sm">
+                  Support:{" "}
+                  <a href="mailto:support@hosterget.com" className="text-primary hover:underline">
+                    support@hosterget.com
+                  </a>
+                </p>
+              </div>
             </section>
           </div>
         </div>
