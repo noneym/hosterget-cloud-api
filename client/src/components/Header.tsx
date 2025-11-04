@@ -59,9 +59,9 @@ export function Header() {
           <Link href="/docs" className="text-sm font-medium hover-elevate rounded-md px-4 py-2 transition-colors" data-testid="link-docs">
             Docs
           </Link>
-          <a href="mailto:support@hosterget.com" className="text-sm font-medium hover-elevate rounded-md px-4 py-2 transition-colors">
+          <Link href="/support" className="text-sm font-medium hover-elevate rounded-md px-4 py-2 transition-colors" data-testid="link-support">
             Support
-          </a>
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -142,9 +142,9 @@ export function Header() {
             <Link href="/docs" className="block hover-elevate rounded-md px-4 py-3 text-sm font-medium" data-testid="link-mobile-docs">
               Docs
             </Link>
-            <a href="mailto:support@hosterget.com" className="block hover-elevate rounded-md px-4 py-3 text-sm font-medium">
+            <Link href="/support" className="block hover-elevate rounded-md px-4 py-3 text-sm font-medium" data-testid="link-mobile-support">
               Support
-            </a>
+            </Link>
             <div className="pt-4 border-t mt-4 space-y-2">
               {isAuthenticated ? (
                 <>

@@ -51,9 +51,9 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="mailto:support@hosterget.com" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-email">
+                <Link href="/support" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-support">
                   Support
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -78,8 +78,36 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="pt-8 border-t">
-          <p className="text-sm text-muted-foreground">© 2024 HosterGet. All rights reserved.</p>
+        <div className="pt-8 border-t space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-muted-foreground">
+            <div>
+              <p className="font-semibold text-foreground mb-2">Purpery, LLC</p>
+              <p className="leading-relaxed">
+                1111B S Governors Ave STE 34861<br />
+                Dover, DE 19904, USA<br />
+                EIN: Pending
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-foreground mb-2">Contact</p>
+              <p className="leading-relaxed">
+                <a href="mailto:support@hosterget.com" className="hover:text-foreground transition-colors">support@hosterget.com</a><br />
+                <a href="mailto:sales@hosterget.com" className="hover:text-foreground transition-colors">sales@hosterget.com</a><br />
+                <a href="tel:+13025550123" className="hover:text-foreground transition-colors">+1 (302) 555-0123</a>
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-foreground mb-2">Business Hours</p>
+              <p className="leading-relaxed">
+                Monday - Friday: 9 AM - 6 PM EST<br />
+                Saturday - Sunday: Closed<br />
+                Email support available 24/7
+              </p>
+            </div>
+          </div>
+          <div className="pt-4 border-t">
+            <p className="text-sm text-muted-foreground">© 2024 HosterGet. All rights reserved.</p>
+          </div>
         </div>
       </div>
     </footer>

@@ -15,6 +15,7 @@ import Register from "@/pages/Register";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
 import Refund from "@/pages/Refund";
+import Support from "@/pages/Support";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -43,6 +44,7 @@ function Router() {
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
           <Route path="/docs" component={Docs} />
+          <Route path="/support" component={Support} />
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/refund" component={Refund} />
@@ -57,6 +59,7 @@ function Router() {
           <Route path="/services" component={Services} />
           <Route path="/pricing" component={Pricing} />
           <Route path="/docs" component={Docs} />
+          <Route path="/support" component={Support} />
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/refund" component={Refund} />
