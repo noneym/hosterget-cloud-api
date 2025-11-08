@@ -1,0 +1,297 @@
+Payment Intents
+Payment Intents help you manage the process of collecting payments from your customers. We recommend creating one Payment Intent per order or customer session in your system. This allows you to track the payment history for a specific session.
+
+Throughout its lifecycle, a Payment Intent moves through various statuses as it interacts with Paytree to handle authentication steps and, ultimately, to complete a successful charge, if applicable.
+
+Create Payment Intent
+Do not send sensitive information, such as card holder data to our API. The "card" object is available for exclusive use to a limited number of customers and requires approval from our compliance team.
+
+This method creates a new Payment Intent, which initiates the payment process for a customer, allowing you to collect payment details and manage the payment flow.
+
+When creating a new payment intent request, you can pass the following identifiers used in callbacks to correlate our transaction with your local records.
+
+transaction_ref - Unique transaction reference from your system, for example, an Order ID. Any requests with a previously used transaction_ref will be rejected.
+
+client_ref - Unique identifier used to reference your client, this can be your customer ID or email address for example.
+
+notification_url - A callback url where requests will be made every time a status change is triggered.
+
+post
+
+/v1/transaction/payment_intent/
+
+Authorizations
+
+tokenAuth
+
+tokenAuth
+Body
+
+application/json
+
+application/json
+transaction_ref
+string · min: 1 · max: 128
+client_ref
+string · min: 1 · max: 128
+amount
+string · decimal
+Pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+amount_currency
+string · enum
+AED - AED د.إ
+AUD - AUD $
+BHD - BHD .د.ب
+CAD - CAD $
+DKK - DKK kr.
+EUR - EUR €
+GBP - GBP £
+HKD - HKD $
+KWD - KWD د.ك
+NZD - NZD $
+OMR - OMR ﷼
+PLN - PLN zł
+QAR - QAR ﷼
+SAR - SAR ﷼
+SEK - SEK kr
+USD - USD $
+Possible values: AEDAUDBHDCADDKKEURGBPHKDKWDNZDOMRPLNQARSARSEKUSD
+method
+all of
+Default: card
+string · enum
+card - Card
+crypto - Crypto
+wire - Wire
+paypal - Paypal
+klarna - Klarna
+ideal - Ideal
+bancontact - Bancontact
+Possible values: cardcryptowirepaypalklarnaidealbancontact
+
+card
+object
+
+customer
+object
+
+address
+object
+
+session
+object
+Hide properties
+ip_address
+string · min: 1
+user_agent
+string · min: 1 · max: 256
+
+callback
+object
+Hide properties
+notification_url
+string · uri · min: 1
+return_url
+string · uri · min: 1
+cancel_url
+string · uri · min: 1
+metadata
+any
+force_route
+string · uuid
+Responses
+201
+The created payment intent
+
+application/json
+
+Response
+object
+post
+/v1/transaction/payment_intent/
+
+HTTP
+
+HTTP
+
+Copy
+POST /v1/transaction/payment_intent/ HTTP/1.1
+Host: 
+Authorization: YOUR_API_KEY
+Content-Type: application/json
+Accept: */*
+Content-Length: 599
+
+{
+  "transaction_ref": "text",
+  "client_ref": "text",
+  "amount": "text",
+  "amount_currency": "AED",
+  "method": "card",
+  "card": {
+    "number": "text",
+    "exp_month": "text",
+    "exp_year": "text",
+    "cvc": "text"
+  },
+  "customer": {
+    "first_name": "text",
+    "last_name": "text",
+    "email": "name@gmail.com",
+    "phone": "text"
+  },
+  "address": {
+    "street": "text",
+    "city": "text",
+    "state": "text",
+    "zip": "text",
+    "country": "AF"
+  },
+  "session": {
+    "ip_address": "text",
+    "user_agent": "text"
+  },
+  "callback": {
+    "notification_url": "https://example.com",
+    "return_url": "https://example.com",
+    "cancel_url": "https://example.com"
+  },
+  "metadata": null,
+  "force_route": "123e4567-e89b-12d3-a456-426614174000"
+}
+
+application/json
+
+application/json
+Test it
+201
+The created payment intent
+
+
+Copy
+{
+  "id": 1,
+  "client_ref": "text",
+  "payment_link": "https://example.com"
+}
+Get all Payment Intents
+This method retrieves a list of all Payment Intents in your account, providing an overview of all payment sessions and their current statuses, useful for tracking multiple payments.
+
+get
+
+/v1/transaction/payment_intent/
+
+Authorizations
+
+tokenAuth
+
+tokenAuth
+Query parameters
+client_email
+string
+client_ref
+string
+domain
+string
+gateway_id
+string
+page
+integer
+A page number within the paginated result set.
+
+search
+string
+A search term.
+
+transaction_ref
+string
+Responses
+200
+Success
+application/json
+
+Response
+object
+get
+/v1/transaction/payment_intent/
+
+HTTP
+
+HTTP
+
+Copy
+GET /v1/transaction/payment_intent/ HTTP/1.1
+Host: 
+Authorization: YOUR_API_KEY
+Accept: */*
+Test it
+200
+Success
+
+Copy
+{
+  "count": 123,
+  "next": "http://api.example.org/accounts/?page=4",
+  "previous": "http://api.example.org/accounts/?page=2",
+  "results": [
+    {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "transaction_ref": "text",
+      "client_ref": "text",
+      "first_name": "text",
+      "last_name": "text",
+      "email": "name@gmail.com",
+      "phone": "text",
+      "address": "text",
+      "amount": "text",
+      "currency": "text",
+      "base_amount": "text",
+      "base_currency": "text",
+      "method": "card",
+      "payment_link": "text",
+      "payment": [
+        {
+          "id": "123e4567-e89b-12d3-a456-426614174000",
+          "amount": "text",
+          "currency": "text",
+          "base_amount": "text",
+          "base_currency": "text",
+          "fee": "text",
+          "refunded": "text",
+          "status": "pending",
+          "refund": [
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174000",
+              "amount": "text",
+              "currency": "text",
+              "payment": "123e4567-e89b-12d3-a456-426614174000",
+              "gateway_id": "text",
+              "created": "2025-11-08T08:45:19.381Z"
+            }
+          ],
+          "created": "2025-11-08T08:45:19.381Z"
+        }
+      ],
+      "actions": null,
+      "metadata": null,
+      "created": "2025-11-08T08:45:19.381Z"
+    }
+  ]
+}
+Get Payment Intent
+This method fetches detailed information about a specific Payment Intent by its unique identifier, allowing you to retrieve the latest payment status and related details for a particular payment.
+
+get
+
+/v1/transaction/payment_intent/
+{id}
+/
+
+Authorizations
+
+tokenAuth
+
+tokenAuth
+Path parameters
+id
+string
