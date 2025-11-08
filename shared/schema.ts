@@ -45,6 +45,8 @@ export const subscriptions = pgTable("subscriptions", {
   status: text("status").notNull(), // 'active', 'canceled', 'past_due'
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
+  paytreePaymentId: text("paytree_payment_id"),
+  paytreeTransactionRef: text("paytree_transaction_ref"),
   currentPeriodEnd: timestamp("current_period_end"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
