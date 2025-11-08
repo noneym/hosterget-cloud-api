@@ -28,6 +28,7 @@ export interface IStorage {
   // Subscription methods
   getSubscription(userId: string): Promise<Subscription | undefined>;
   getSubscriptionByStripeId(stripeSubscriptionId: string): Promise<Subscription | undefined>;
+  getSubscriptionByPaytreeRef(paytreeTransactionRef: string): Promise<Subscription | undefined>;
   createSubscription(subscription: InsertSubscription): Promise<Subscription>;
   updateSubscription(id: string, subscription: Partial<InsertSubscription>): Promise<Subscription | undefined>;
   updateSubscriptionByStripeId(stripeSubscriptionId: string, subscription: Partial<InsertSubscription>): Promise<Subscription | undefined>;
@@ -116,6 +117,13 @@ export class DbStorage implements IStorage {
       .set({ ...subscription, updatedAt: new Date() })
       .where(eq(subscriptions.stripeSubscriptionId, stripeSubscriptionId))
       .returning();
+    return result[0];
+  }
+
+  async getSubscriptionByPaytreeRef(paytreeTransactionRef: string): Promise<Subscription | undefined> {
+    const result = await db.select().from(subscriptions)
+      .where(eq(subscriptions.paytreeTransactionRef, paytreeTransactionRef))
+      .limit(1);
     return result[0];
   }
 

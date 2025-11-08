@@ -37,7 +37,7 @@ export default function Pricing() {
       return;
     }
 
-    // Pro plan - create checkout session
+    // Pro plan - create payment intent with Paytree
     if (plan === 'Pro') {
       if (!isAuthenticated) {
         // Save intended plan and redirect to login
@@ -48,18 +48,25 @@ export default function Pricing() {
 
       setIsLoading(true);
       try {
-        const response = await apiRequest('POST', '/api/create-checkout-session', {
+        const response = await apiRequest('POST', '/api/paytree/create-payment-intent', {
           plan: 'pro'
         });
         const data = await response.json();
         
-        if (data.url) {
-          window.location.href = data.url;
+        if (data.paymentLink) {
+          window.location.href = data.paymentLink;
+        } else {
+          toast({
+            title: "Error",
+            description: "Payment link not available. Please try again.",
+            variant: "destructive",
+          });
+          setIsLoading(false);
         }
       } catch (error: any) {
         toast({
           title: "Error",
-          description: error.message || "Failed to create checkout session",
+          description: error.message || "Failed to create payment session",
           variant: "destructive",
         });
         setIsLoading(false);

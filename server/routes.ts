@@ -13,6 +13,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2025-09-30.clover",
 });
 
+if (!process.env.PAYTREE_API_KEY) {
+  throw new Error('Missing required Paytree secret: PAYTREE_API_KEY');
+}
+if (!process.env.PAYTREE_API_HOST) {
+  throw new Error('Missing required Paytree secret: PAYTREE_API_HOST');
+}
+
+const PAYTREE_API_KEY = process.env.PAYTREE_API_KEY;
+const PAYTREE_API_HOST = process.env.PAYTREE_API_HOST;
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
   await setupAuth(app);
@@ -338,6 +348,170 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(subscription);
     } catch (error: any) {
       console.error('Error fetching subscription:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // ========== PAYTREE PAYMENT ROUTES ==========
+  app.post('/api/paytree/create-payment-intent', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.id;
+      const { plan } = req.body;
+
+      if (!['pro', 'enterprise'].includes(plan)) {
+        return res.status(400).json({ error: 'Invalid plan' });
+      }
+
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      // Check if user already has an active PAID subscription
+      const existingSubscription = await storage.getSubscription(userId);
+      if (existingSubscription?.status === 'active' && existingSubscription.plan !== 'free') {
+        return res.status(400).json({ error: 'You already have an active paid subscription. Please cancel your current subscription first.' });
+      }
+
+      // Generate unique transaction reference
+      const transactionRef = `hosterget_${userId}_${Date.now()}`;
+      const clientRef = user.email || userId;
+
+      // Determine amount based on plan
+      const amount = plan === 'pro' ? '25.00' : '99.00';
+
+      // Get origin for callback URLs
+      const origin = req.headers.origin || 'http://localhost:5000';
+
+      // Create Paytree payment intent
+      const paymentData = {
+        transaction_ref: transactionRef,
+        client_ref: clientRef,
+        amount: amount,
+        amount_currency: 'USD',
+        method: 'card',
+        customer: {
+          first_name: user.firstName || 'Customer',
+          last_name: user.lastName || 'User',
+          email: user.email,
+          phone: '',
+        },
+        address: {
+          street: '',
+          city: '',
+          state: '',
+          zip: '',
+          country: 'US',
+        },
+        session: {
+          ip_address: req.ip || req.connection.remoteAddress || '0.0.0.0',
+          user_agent: req.headers['user-agent'] || 'Unknown',
+        },
+        callback: {
+          notification_url: `${origin}/api/paytree-webhook`,
+          return_url: `${origin}/dashboard?payment=success`,
+          cancel_url: `${origin}/pricing?payment=cancelled`,
+        },
+        metadata: {
+          userId: userId,
+          plan: plan,
+        },
+      };
+
+      const response = await fetch(`${PAYTREE_API_HOST}/v1/transaction/payment_intent/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': PAYTREE_API_KEY,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentData),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Paytree API error:', response.status, errorText);
+        throw new Error(`Paytree API error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      // Store transaction reference and set subscription to pending status
+      if (existingSubscription) {
+        await storage.updateSubscription(existingSubscription.id, {
+          paytreeTransactionRef: transactionRef,
+          status: 'active',
+        });
+      } else {
+        // Create subscription record in free plan (will be upgraded upon successful payment)
+        await storage.createSubscription({
+          userId,
+          plan: 'free',
+          status: 'active',
+          paytreeTransactionRef: transactionRef,
+        });
+      }
+
+      res.json({
+        paymentLink: result.payment_link,
+        paymentId: result.id,
+        transactionRef: transactionRef,
+      });
+    } catch (error: any) {
+      console.error('Error creating Paytree payment intent:', error);
+      res.status(500).json({ error: error.message || 'Failed to create payment intent' });
+    }
+  });
+
+  // Paytree webhook endpoint for payment notifications
+  app.post('/api/paytree-webhook', async (req, res) => {
+    try {
+      console.log('Paytree webhook received:', req.body);
+      
+      // TODO: Implement webhook signature verification when Paytree provides signature headers
+      // For now, we're logging webhook data and processing cautiously
+      // In production, you should validate the webhook signature to prevent unauthorized requests
+      
+      const { transaction_ref, status, payment, metadata } = req.body;
+
+      if (!transaction_ref) {
+        console.error('Webhook missing transaction_ref');
+        return res.status(400).json({ error: 'Missing transaction_ref' });
+      }
+
+      // Find subscription by transaction reference
+      const subscription = await storage.getSubscriptionByPaytreeRef(transaction_ref);
+      
+      if (!subscription) {
+        console.error('No subscription found for transaction_ref:', transaction_ref);
+        return res.status(404).json({ error: 'Subscription not found' });
+      }
+
+      // Extract plan from metadata
+      const plan = metadata?.plan || 'pro';
+
+      // Update subscription based on payment status
+      const paymentStatus = payment?.[0]?.status || status;
+      
+      if (paymentStatus === 'completed' || paymentStatus === 'success') {
+        await storage.updateSubscription(subscription.id, {
+          plan: plan,
+          status: 'active',
+          paytreePaymentId: req.body.id || payment?.[0]?.id,
+        });
+        console.log('Subscription upgraded to', plan, 'for user', subscription.userId);
+      } else if (paymentStatus === 'failed') {
+        console.log('Payment failed for transaction:', transaction_ref);
+        // Keep subscription as-is (free plan)
+      } else if (paymentStatus === 'pending') {
+        console.log('Payment pending for transaction:', transaction_ref);
+        // Wait for final status
+      } else {
+        console.log('Unknown payment status:', paymentStatus, 'for transaction:', transaction_ref);
+      }
+
+      res.json({ received: true });
+    } catch (error: any) {
+      console.error('Error handling Paytree webhook:', error);
       res.status(500).json({ error: error.message });
     }
   });
