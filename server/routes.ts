@@ -391,16 +391,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         amount_currency: 'USD',
         method: 'card',
         customer: {
-          first_name: user.firstName || 'Customer',
-          last_name: user.lastName || 'User',
+          first_name: user.firstName || 'John',
+          last_name: user.lastName || 'Doe',
           email: user.email,
-          phone: '',
+          phone: '+1234567890',
         },
         address: {
-          street: '',
-          city: '',
-          state: '',
-          zip: '',
+          street: '123 Main Street',
+          city: 'New York',
+          state: 'NY',
+          zip: '10001',
           country: 'US',
         },
         session: {
