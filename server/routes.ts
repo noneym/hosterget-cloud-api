@@ -424,7 +424,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('URL:', apiUrl);
       console.log('Method: POST');
       console.log('Headers:', {
-        'Authorization': `${PAYTREE_API_KEY.substring(0, 10)}...`,
+        'Authorization': `Token ${PAYTREE_API_KEY.substring(0, 10)}...`,
         'Content-Type': 'application/json',
       });
       console.log('Request Body:', JSON.stringify(paymentData, null, 2));
@@ -433,7 +433,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Authorization': PAYTREE_API_KEY,
+          'Authorization': `Token ${PAYTREE_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(paymentData),
