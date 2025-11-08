@@ -418,7 +418,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
       };
 
-      const response = await fetch(`${PAYTREE_API_HOST}/v1/transaction/payment_intent/`, {
+      const apiUrl = `${PAYTREE_API_HOST}/v1/transaction/payment_intent/`;
+      
+      console.log('=== PAYTREE API REQUEST ===');
+      console.log('URL:', apiUrl);
+      console.log('Method: POST');
+      console.log('Headers:', {
+        'Authorization': `${PAYTREE_API_KEY.substring(0, 10)}...`,
+        'Content-Type': 'application/json',
+      });
+      console.log('Request Body:', JSON.stringify(paymentData, null, 2));
+      console.log('===========================');
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Authorization': PAYTREE_API_KEY,
@@ -427,9 +439,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         body: JSON.stringify(paymentData),
       });
 
+      console.log('=== PAYTREE API RESPONSE ===');
+      console.log('Status:', response.status);
+      console.log('Status Text:', response.statusText);
+      console.log('============================');
+
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Paytree API error:', response.status, errorText);
+        console.error('Paytree API error response:', errorText);
         throw new Error(`Paytree API error: ${response.status}`);
       }
 
