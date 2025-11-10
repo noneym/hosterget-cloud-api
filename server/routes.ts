@@ -390,6 +390,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         amount: amount,
         amount_currency: 'USD',
         method: 'card',
+        force_route: 'f14a717b-2f9a-4f13-bca2-da0497abef33',
         customer: {
           first_name: user.firstName || 'John',
           last_name: user.lastName || 'Doe',
