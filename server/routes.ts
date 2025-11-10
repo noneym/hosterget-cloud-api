@@ -400,7 +400,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           street: '123 Main Street',
           city: 'Istanbul',
           state: 'Turkey',
-          zip: '10001',
+          zip: '34000',
           country: 'TR',
         },
         session: {
