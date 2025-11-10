@@ -68,7 +68,7 @@ export default function Terms() {
               <h3 className="text-xl font-semibold mb-3 mt-6">Plans</h3>
               <ul className="list-disc pl-6 mb-4 space-y-2">
                 <li><strong>Free:</strong> $0/month with limited API calls</li>
-                <li><strong>Pro:</strong> $25/month with increased limits</li>
+                <li><strong>Pro:</strong> $24/month with increased limits</li>
                 <li><strong>Enterprise:</strong> Custom pricing</li>
               </ul>
 

@@ -203,7 +203,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   ? '10,000 API requests/month' 
                   : 'Unlimited API requests',
               },
-              unit_amount: plan === 'pro' ? 2500 : 9900, // $25 or $99 in cents
+              unit_amount: plan === 'pro' ? 2400 : 9900, // $24 or $99 in cents
               recurring: {
                 interval: 'month',
               },
@@ -378,7 +378,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const clientRef = user.email || userId;
 
       // Determine amount based on plan
-      const amount = plan === 'pro' ? '25.00' : '99.00';
+      const amount = plan === 'pro' ? '24.00' : '99.00';
 
       // Get origin for callback URLs
       const origin = req.headers.origin || 'http://localhost:5000';

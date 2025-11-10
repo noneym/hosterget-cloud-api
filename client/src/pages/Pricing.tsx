@@ -111,7 +111,7 @@ export default function Pricing() {
               />
               <PricingCard
                 name="Pro"
-                price="$25"
+                price="$24"
                 description="For growing businesses"
                 features={[
                   '100,000 API calls/month',
@@ -156,7 +156,7 @@ export default function Pricing() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {[
                   { amount: '$12', calls: '10K calls' },
-                  { amount: '$25', calls: '25K calls' },
+                  { amount: '$24', calls: '25K calls' },
                   { amount: '$50', calls: '60K calls' },
                   { amount: '$100', calls: '150K calls' }
                 ].map((pkg) => (

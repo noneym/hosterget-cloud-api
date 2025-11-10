@@ -409,7 +409,7 @@ print(response.json())`}
                 </div>
                 <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
                   <div>
-                    <p className="font-semibold">Pro Plan - $25/month</p>
+                    <p className="font-semibold">Pro Plan - $24/month</p>
                     <p className="text-sm text-muted-foreground">Up to 10,000 requests per month</p>
                   </div>
                   <Badge variant="outline">10,000/month</Badge>
