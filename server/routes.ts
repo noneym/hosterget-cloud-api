@@ -398,10 +398,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
         address: {
           street: '123 Main Street',
-          city: 'New York',
-          state: 'NY',
+          city: '',
+          state: '',
           zip: '10001',
-          country: 'US',
+          country: 'TR',
         },
         session: {
           ip_address: req.ip || req.connection.remoteAddress || '0.0.0.0',
