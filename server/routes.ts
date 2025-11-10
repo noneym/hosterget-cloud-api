@@ -398,8 +398,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
         address: {
           street: '123 Main Street',
-          city: '',
-          state: '',
+          city: 'Istanbul',
+          state: 'Turkey',
           zip: '10001',
           country: 'TR',
         },
