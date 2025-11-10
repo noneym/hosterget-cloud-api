@@ -28,12 +28,9 @@ export default function Pricing() {
       return;
     }
 
-    // Enterprise - show contact message
+    // Enterprise - redirect to support page
     if (plan === 'Enterprise') {
-      toast({
-        title: "Contact Sales",
-        description: "Please email sales@hosterget.com for enterprise pricing.",
-      });
+      setLocation('/support');
       return;
     }
 

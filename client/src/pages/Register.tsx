@@ -5,8 +5,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Separator } from "@/components/ui/separator";
-import { SiGoogle, SiGithub } from "react-icons/si";
 
 export default function Register() {
   const [, setLocation] = useLocation();
@@ -92,10 +90,6 @@ export default function Register() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleOAuthRegister = (provider: string) => {
-    window.location.href = `/api/auth/${provider}`;
   };
 
   return (
@@ -188,40 +182,6 @@ export default function Register() {
               {isLoading ? "Creating account..." : "Create account"}
             </Button>
           </form>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <Separator className="w-full" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">
-                Or continue with
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <Button
-              variant="outline"
-              onClick={() => handleOAuthRegister("google")}
-              disabled={isLoading}
-              data-testid="button-google-register"
-              className="flex items-center gap-2"
-            >
-              <SiGoogle className="w-4 h-4" />
-              Google
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => handleOAuthRegister("github")}
-              disabled={isLoading}
-              data-testid="button-github-register"
-              className="flex items-center gap-2"
-            >
-              <SiGithub className="w-4 h-4" />
-              GitHub
-            </Button>
-          </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-2">
           <div className="text-sm text-muted-foreground text-center">
