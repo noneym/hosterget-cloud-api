@@ -120,7 +120,7 @@ export default function Pricing() {
                   '99.9% uptime SLA'
                 ]}
                 recommended={true}
-                ctaText={isLoading && selectedPlan === 'Pro' ? "Loading..." : "Subscribe Now"}
+                ctaText={isLoading && selectedPlan === 'Pro' ? "Loading..." : "Pay Now"}
                 onSelect={() => handleSelectPlan('Pro')}
               />
               <PricingCard

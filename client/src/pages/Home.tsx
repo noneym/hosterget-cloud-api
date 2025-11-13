@@ -145,7 +145,7 @@ export default function Home() {
               status="Live"
               metric="Sub-second response"
               tags={['GPU', 'AI', 'ML']}
-              href="/services/gpu"
+              href="/docs"
             />
             <ServiceCard
               icon={Scan}
@@ -154,7 +154,7 @@ export default function Home() {
               status="Beta"
               metric="95%+ accuracy"
               tags={['Computer Vision', 'AI']}
-              href="/services/face-analyzer"
+              href="/docs"
             />
             <ServiceCard
               icon={Shield}
@@ -163,7 +163,7 @@ export default function Home() {
               status="Live"
               metric="1K free requests/day"
               tags={['Security', 'Free']}
-              href="/services/identity"
+              href="/docs"
             />
           </div>
         </div>
